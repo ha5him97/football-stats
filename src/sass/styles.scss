@@ -1,0 +1,18 @@
+// src/sass/styles.scss
+$primary-color: #007bff;
+$secondary-color: #f8f9fa;
+
+body {
+  background-color: $secondary-color;
+}
+
+header {
+  background-color: $primary-color;
+  color: white;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid $primary-color;
+  border-radius: 5px;
+}
