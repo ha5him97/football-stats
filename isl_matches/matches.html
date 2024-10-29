@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCL Matches</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .match { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>UEFA Champions League Matches</h1>
+    <div id="ucl-matches">
+        <!-- UCL matches will be inserted here -->
+    </div>
+
+    <script>
+        const apiUrl = 'http://localhost:3000/ucl-matches'; // Use your local server
+
+        fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => displayMatches(data.matches))
+        .catch(error => console.error('Error fetching data:', error));
+
+        function displayMatches(matches) {
+            const matchContainer = document.getElementById('ucl-matches');
+            matchContainer.innerHTML = ''; // Clear previous content
+
+            matches.forEach(match => {
+                const matchElement = document.createElement('div');
+                matchElement.className = 'match';
+                matchElement.innerHTML = `
+                    <h3>${match.homeTeam.name} vs ${match.awayTeam.name}</h3>
+                    <p>Date: ${new Date(match.utcDate).toLocaleDateString()}</p>
+                    <p>Time: ${new Date(match.utcDate).toLocaleTimeString()}</p>
+                `;
+                matchContainer.appendChild(matchElement);
+            });
+        }
+    </script>
+</body>
+</html>
