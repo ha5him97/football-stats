@@ -10,7 +10,7 @@ h1 {
 
 table {
     width: 80%;
-    margin: auto;
+    margin: 100px auto auto;
     border-collapse: collapse;
     background-color: #fff;
 }
@@ -37,6 +37,7 @@ tr:nth-child(even) {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 50px;
   }
   
   /* Hover Effect */
@@ -57,4 +58,6 @@ tr:nth-child(even) {
     color: #666666;
     cursor: not-allowed;
   }
-  
+  .ucl-table{
+    margin-top:-50px;
+  }
