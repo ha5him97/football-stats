@@ -18,5 +18,40 @@ body {
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
-
+  #match-list {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  #match-list h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  #matches li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  #matches li span {
+    font-weight: bold;
+  }
+  #matches {
+    max-height: 400px; /* Limit height */
+    overflow-y: scroll; /* Enable vertical scrolling */
+  }
+  
+  #matches li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
   

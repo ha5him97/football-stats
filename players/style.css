@@ -1,33 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f0f0f0;
-}
-
-h1 {
-    color: #333;
-}
-
-table {
-    width: 80%;
-    margin: auto;
-    border-collapse: collapse;
-    background-color: #fff;
-}
-
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
+/* Basic Button Styling */
 .button {
     background-color: #ff0000; /* Primary color */
     color: white;
