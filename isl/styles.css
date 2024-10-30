@@ -37,6 +37,7 @@ th {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
 /* Basic Button Styling */
 .button {
     background-color: #ff0000; /* Primary color */
