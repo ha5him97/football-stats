@@ -4,7 +4,7 @@ const matches = [
     { homeTeam: "juventus", awayTeam: "Arsenal", date: "2024-11-12", time: "11:15 PM" },
     { homeTeam: "st.polten", awayTeam: "Barca", date: "2024-11-12", time: "11:15 PM" },
     { homeTeam: "Man City", awayTeam: "hammarby", date: "2024-11-13", time: "1:30 PM" },
-    { homeTeam: "Bayern ", awayTeam: "valerenga", date: "2024-11-03", time: "21:00" },
+    { homeTeam: "Bayern ", awayTeam: "valerenga", date: "2024-11-03", time: "1:30 PM" },
     { homeTeam: "R.Madrid", awayTeam: "Twente", date: "2024-11-13", time: "11:15 PM" },
     { homeTeam: "Galatasary", awayTeam: "wolfsburg", date: "2024-11-03", time: "11:15 PM" },
     { homeTeam: "Roma", awayTeam: "Lyon", date: "2024-11-14", time: "1:30 PM" },
