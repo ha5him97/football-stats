@@ -8,31 +8,43 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/png" href="logo/logo.jpg">
 
 </head>
 <body>
 
-  <header class="bg-info text-white text-center py-4">
-    <h1 class="font-weight-bold">Football Stats </h1>
-    <p class="font-italic">Thank you to visit my website!</p>
-    <!-- public/index.html -->
-<nav>
-    <a href="players/players.html" class="button text-primary">Player Stats</a>
-  </nav><nav>
-    <a href="ucl/ucl.html" class="button text-danger">UCL Table</a>
-  </nav>
-  <nav>
-    <a href="top-ten/home.html" class="button text-warning">Top Ten Young Players</a>
-  </nav>
-  <nav>
-    <a href="isl/isl.html" class="button text-secondary">ISL Table</a>
-  </nav>
-  <nav>
-    <a href="news/news.html" class="button text-dark">Latest News</a>
-  </nav>
-  </header>
+  <header>
+    <div class="header-container">
+        <a href="index.html" class="logo-container">
+            <img src="logo/logo.jpg" alt="Haxhim Logo" class="logo">
+        </a>
+        <nav class="nav-links">
+            <a href="news/news.html">Latest News</a>
+            <a href="top-ten/home.html">Top Ten Young Players</a>
+            <a href="ucl/ucl.html">UCL Table</a>
+            <a href="players/players.html">Player Stats</a>
+        </nav>
+    </div>
+</header>
+
 
   <div class="container mt-5">
+    <div class="content-container">
+      <div class="side-image left-side">
+          <img src="images/hashim.jpeg" alt="Left Side Image">
+      </div>
+  
+      <main class="main-content">
+          <h1>Football Stats</h1>
+          <p>Thank you for visiting my website!</p>
+          <!-- Your main content, e.g., "Upcoming Matches" section -->
+      </main>
+  
+      <div class="side-image right-side">
+          <img src="images/ronaldo.jpeg" alt="Right Side Image">
+      </div>
+  </div>
+  
     <section id="featured-matches" class="my-5">
       <div class="row" id="matches-container">
         <div id="match-list">
