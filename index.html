@@ -29,43 +29,45 @@
 </header>
 
 
-  <div class="container mt-5">
-    <div class="content-container">
-      <div class="side-image left-side">
-          <img src="images/hashim.jpeg" alt="Left Side Image">
-      </div>
-  
-      <main class="main-content">
-          <h1>Football Stats</h1>
-          <p>Thank you for visiting my website!</p>
-          <!-- Your main content, e.g., "Upcoming Matches" section -->
-      </main>
-  
-      <div class="side-image right-side">
-          <img src="images/ronaldo.jpeg" alt="Right Side Image">
-      </div>
-  </div>
-  
-    <section id="featured-matches" class="my-5">
-      <div class="row" id="matches-container">
-        <div id="match-list">
-          <h2>Upcoming Matches</h2>
-          <ul id="matches">
-            <!-- Matches will be listed here -->
-            <div id="pagination-controls">
-              <button id="prev-btn">Previous</button>
-              <button id="next-btn">Next</button>
-              <input type="text" id="team-filter" placeholder="Filter by Team">
-              <button onclick="filterMatches()">Filter</button>
-
-            </div>
-            
-          </ul>
+  <section id="spotlight">
+    <div class="container mt-5">
+      <div class="content-container">
+        <div class="side-image left-side">
+            <img src="images/hashim.jpeg" alt="Left Side Image">
         </div>
-        
-      </div>
-    </section>
-  </div>
+    
+        <main class="main-content">
+            <h1>Football Stats</h1>
+            <p>Thank you for visiting my website!</p>
+            <!-- Your main content, e.g., "Upcoming Matches" section -->
+        </main>
+    
+        <div class="side-image right-side">
+            <img src="images/ronaldo.jpeg" alt="Right Side Image">
+        </div>
+    </div>
+    
+      <section id="featured-matches" class="my-5">
+        <div class="row" id="matches-container">
+          <div id="match-list">
+            <h2>Upcoming Matches</h2>
+            <ul id="matches">
+              <!-- Matches will be listed here -->
+              <div id="pagination-controls">
+                <button id="prev-btn">Previous</button>
+                <button id="next-btn">Next</button>
+                <input type="text" id="team-filter" placeholder="Filter by Team">
+                <button onclick="filterMatches()">Filter</button>
+  
+              </div>
+              
+            </ul>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+  </section>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="js/scripts.js"></script>

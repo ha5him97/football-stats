@@ -5,7 +5,7 @@
 }
 
 header {
-  background-color: #00bcd4; /* Adjust to your preferred color */
+  background:linear-gradient(to right, #ff6e6e, #8f70ff); /* Adjust to your preferred color */
   padding: 10px 20px;
   position: sticky;
   top: 0;
@@ -31,6 +31,7 @@ header {
   width: auto;
   border-radius: 50%;
   margin-right: 10px;
+  opacity: 0.8;
 }
 
 .logo-text {
@@ -55,7 +56,17 @@ header {
 .nav-links a:hover {
   color: #ff4081; /* Add a hover color */
 }
-
+#spotlight{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background:linear-gradient(to right, #80927e, #f1ff98); /* Adjust to your preferred color */
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
   .container {
     max-width: 1200px;
     margin: 0 auto;
