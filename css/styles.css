@@ -196,3 +196,9 @@ footer {
     max-width: 800px; /* Adjust for main content width */
     text-align: center;
 }
+#favicon{
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
