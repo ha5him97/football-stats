@@ -182,6 +182,7 @@ footer {
 .side-image {
     flex-shrink: 0;
     width: 300px; /* Adjust width as needed */
+    border-radius: 20%;
 }
 
 .side-image img {
