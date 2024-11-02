@@ -207,3 +207,68 @@ footer {
     max-width: 800px; /* Adjust for main content width */
     text-align: center;
 }
+/* Up to 120px */
+@media only screen and (max-width: 120px) {
+  body {
+    font-size: 10px;
+    padding: 2px;
+  }
+  img, nav, footer {
+    display: none; /* Hide non-essential elements */
+  }
+  p, h1 {
+    font-size: 8px;
+  }
+}
+
+/* Up to 360px */
+@media only screen and (max-width: 360px) {
+  body {
+    font-size: 12px;
+    padding: 5px;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  .container {
+    padding: 5px;
+  }
+}
+
+/* Up to 640px */
+@media only screen and (max-width: 640px) {
+  body {
+    font-size: 14px;
+    padding: 10px;
+  }
+  nav {
+    display: flex;
+    flex-direction: column;
+  }
+  img {
+    max-width: 100%;
+  }
+}
+
+/* Up to 768px */
+@media only screen and (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+  .sidebar {
+    display: none; /* Hide sidebar for better space usage */
+  }
+}
+
+/* Up to 800px */
+@media only screen and (max-width: 800px) {
+  .container {
+    width: 90%;
+    margin: 0 auto;
+  }
+  h1, h2, h3 {
+    font-size: 20px;
+  }
+}
+
