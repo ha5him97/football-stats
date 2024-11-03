@@ -226,9 +226,10 @@ footer {
   body {
     font-size: 12px;
     padding: 5px;
+    width: auto;
   }
   img {
-    max-width: 100%;
+    max-width: 100px;
     height: auto;
   }
   .container {
@@ -251,13 +252,47 @@ footer {
   }
 }
 
-/* Up to 768px */
+/* Basic media query for responsive design */
 @media only screen and (max-width: 768px) {
+  /* Styles for tablets and smaller devices */
   body {
-    font-size: 16px;
+      font-size: 16px;
+      padding: 10px;
   }
-  .sidebar {
-    display: none; /* Hide sidebar for better space usage */
+
+  .container {
+      flex-direction: column;
+      margin: 0 auto;
+  }
+
+  .header, .footer {
+      text-align: center;
+  }
+
+  .menu {
+      display: block;
+      width: 100%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  /* Styles for mobile devices */
+  body {
+      font-size: 14px;
+  }
+
+  .container {
+      padding: 5px;
+  }
+
+  .menu-item {
+      font-size: 12px;
+      padding: 8px;
+  }
+
+  .image {
+      width: 100%;
+      height: auto;
   }
 }
 
