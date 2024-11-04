@@ -259,7 +259,9 @@ footer {
       font-size: 16px;
       padding: 10px;
   }
-
+  .side-image {
+      display: none;
+  }
   .container {
       flex-direction: column;
       margin: 0 auto;
@@ -289,8 +291,16 @@ footer {
       font-size: 12px;
       padding: 8px;
   }
-
-  .image {
+  .first{
+    display: hidden;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .side-image {
+    display:none;
+  }
+  .main-content {
       width: 100%;
       height: auto;
   }
