@@ -277,7 +277,7 @@ footer {
   @media only screen and (max-width: 480px) {
     header nav {
       /* Adjust the navigation display */
-      display: flex;
+      display: inline-block;
       flex-direction: column; /* Stack links vertically */
       align-items: center; /* Center align navigation items */
     }
