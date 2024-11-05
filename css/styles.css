@@ -273,6 +273,7 @@ footer {
   }
   .nav-links {
     display: inline-block;
+    max-width: max-content;
   }
   @media only screen and (max-width: 480px) {
     header nav {
@@ -284,7 +285,7 @@ footer {
   
     header nav a {
       /* Adjust individual link styling */
-      display: block;
+      display: inline-block;
       padding: 10px;
       font-size: 16px; /* Adjust the size if needed */
     }
