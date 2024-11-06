@@ -4,7 +4,8 @@ body {
     text-align: center;
     background-color: #f9f9f9;
     margin: 0;
-    padding: 20px;
+    padding: 20px;  
+    background: linear-gradient(to right, #ff6e6e, #8f70ff);
 }
 
 h1 {

@@ -79,3 +79,6 @@ footer {
 .footer-bottom p {
     margin: 0;
 }
+body{
+    background: linear-gradient(to right, #ff6e6e, #8f70ff);
+}

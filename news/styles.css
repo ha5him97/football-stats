@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4; /* Light gray background */
+    background: linear-gradient(to right, #ff6e6e, #8f70ff);
 }
 
 .container {

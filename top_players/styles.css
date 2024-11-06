@@ -1,6 +1,6 @@
 body{
   padding-top: 100px;
-  background-color: #565956;
+  background: linear-gradient(to right, #ff6e6e, #8f70ff);
 }
 /* Basic Button Styling */
 .button {
