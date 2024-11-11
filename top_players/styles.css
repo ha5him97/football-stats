@@ -138,3 +138,39 @@ footer {
 .footer-bottom p {
     margin: 0;
 }
+/* Initially hide the player info */
+.slide-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+  background: #ed0000;
+  width: auto;
+  display: inline-block;
+  border-radius: 20px;
+}
+
+/* Class to expand and show content */
+.slide-content.active {
+  min-height: fit-content; /* Adjust this height to fit your content */
+  overflow: auto;
+  transition: max-height 0.5s ease-in;
+  background: #ed0000;
+  width: auto;
+  display: inline-block;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 15px;
+  position: absolute;
+  z-index: 1;
+}
+.slide-content:hover{
+  min-height: fit-content; /* Adjust this height to fit your content */
+  overflow: auto;
+  transition: max-height 0.5s ease-in;
+
+  width: auto;
+  display: inline-block;
+  border-radius: 20px;
+  color: rgb(74, 0, 0);
+  font-size: 24px;
+}
