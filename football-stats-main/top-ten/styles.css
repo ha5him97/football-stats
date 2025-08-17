@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(to right, #ff6e6e, #8f70ff);
+    margin: 0;
+}
+
+h1 {
+    color: #333;
+    margin: 20px 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    margin: 15px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: left;
+}
+
+.player-name {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.player-details {
+    color: #555;
+}
+
+.player-description {
+    margin-top: 10px;
+    color: #333;
+    font-size: 0.9em;
+}
+/* Basic Button Styling */
+.button {
+    background-color: #ff0000; /* Primary color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  /* Hover Effect */
+  .button:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+    transform: scale(1.05); /* Slight enlargement */
+  }
+  
+  /* Focused State */
+  .button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Disabled State */
+  .button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+  }
+  /* Footer Styling */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.footer-content h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.footer-content p {
+    font-size: 0.9em;
+    margin: 10px 0 20px;
+    color: #aaa;
+}
+
+.socials {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 0;
+}
+
+.socials li {
+    display: inline-block;
+}
+
+.socials a {
+    color: #fff;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+.socials a:hover {
+    color: #4d94ff; /* Custom color for hover effect */
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 0.8em;
+    color: #aaa;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
