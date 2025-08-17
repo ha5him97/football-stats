@@ -1,0 +1,92 @@
+/* General styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f6f9;
+  color: #222;
+}
+
+header {
+  background: #1d3557;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+nav {
+  margin-top: 0.5em;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+nav a.active, nav a:hover {
+  background: #e63946;
+}
+
+.content {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+  color: #1d3557;
+}
+
+ul {
+  list-style: square;
+  padding-left: 20px;
+}
+
+.stats table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.stats th, .stats td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.stats th {
+  background: #1d3557;
+  color: white;
+}
+
+button {
+  background: #e63946;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #d62828;
+}
+
+footer {
+  background: #1d3557;
+  color: white;
+  text-align: center;
+  padding: 1em;
+  margin-top: 20px;
+}

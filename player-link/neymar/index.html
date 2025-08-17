@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="gallery">
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="images/1.jpeg" alt="Image 1">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="images/2.jpeg" alt="Image 2">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="images/3.jpeg" alt="Image 3">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="images/4.jpeg" alt="Image 3">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="images/5.jpeg" alt="Image 3">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="images/6.jpeg" alt="Image 3">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="images/7.jpeg" alt="Image 3">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="images/8.jpeg" alt="Image 3">
+        </div>
+    </div>
+    <div class="first">
+        <a href="../../top_players/index.html" class="button first"  >Top Players</a>
+        <a href="https://en.wikipedia.org/wiki/Neymar" class="button"  >Learn More</a>
+    </div>
+    <!-- Lightbox Container -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close">&times;</span>
+        <img id="lightbox-img" class="lightbox-content">
+    </div>
+
+    <script src="script.js"></script>
+    <footer>
+        <div class="footer-content">
+            <h3>haxhim</h3>
+            <p>Your one-stop hub for football stats, analysis, and gaming fun.</p>
+            <ul class="socials">
+                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 haxhim. All Rights Reserved | Designed by You</p>
+        </div>
+    </footer>
+</body>
+</html>

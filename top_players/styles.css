@@ -1,0 +1,176 @@
+body{
+  padding-top: 100px;
+  background: linear-gradient(to right, #ff6e6e, #8f70ff);
+}
+/* Basic Button Styling */
+.button {
+  background-color: #343434; /* Primary color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Hover Effect */
+.button:hover {
+  background-color: #0056b3; /* Darker shade for hover */
+  transform: scale(1.05); /* Slight enlargement */
+}
+
+/* Focused State */
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Disabled State */
+.button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}/* Page Title */
+#best-players h2 {
+    text-align: center;
+    font-size: 2em;
+    margin: 20px 0;
+    color: #333;
+  }
+  
+  /* Player Cards Section */
+  .players {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  /* Individual Player Card */
+  .player {
+    background-color: #fff;
+    width: 200px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .player:hover {
+    transform: scale(1.05);
+  }
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .player img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .player h3 {
+    font-size: 1.5em;
+    color: #444;
+    margin: 10px 0 5px;
+  }
+  
+  .player p {
+    color: #666;
+    margin: 5px 0;
+    font-size: 0.9em;
+  }
+  
+    /* Footer Styling */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.footer-content h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.footer-content p {
+    font-size: 0.9em;
+    margin: 10px 0 20px;
+    color: #aaa;
+}
+
+.socials {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 0;
+}
+
+.socials li {
+    display: inline-block;
+}
+
+.socials a {
+    color: #fff;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+.socials a:hover {
+    color: #4d94ff; /* Custom color for hover effect */
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 0.8em;
+    color: #aaa;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+/* Initially hide the player info */
+.slide-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+  background: #ed0000;
+  width: auto;
+  display: inline-block;
+  border-radius: 20px;
+}
+
+/* Class to expand and show content */
+.slide-content.active {
+  min-height: fit-content; /* Adjust this height to fit your content */
+  overflow: auto;
+  transition: max-height 0.5s ease-in;
+  background: #ed0000;
+  width: auto;
+  display: inline-block;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 15px;
+  position: absolute;
+  z-index: 1;
+}
+.slide-content:hover{
+  min-height: fit-content; /* Adjust this height to fit your content */
+  overflow: auto;
+  transition: max-height 0.5s ease-in;
+
+  width: auto;
+  display: inline-block;
+  border-radius: 20px;
+  color: rgb(74, 0, 0);
+  font-size: 24px;
+}
