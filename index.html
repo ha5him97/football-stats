@@ -7,11 +7,10 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="icon" type="image/png" href="logo/logo.jpg">
 
-
   <style>
 /* Navbar styling */
 .navbar {
-  background: linear-gradient(to right, #000000, #434343); /* black gradient */
+  background: linear-gradient(to right, #000000, #434343);
 }
 
 .navbar .nav-link,
@@ -21,10 +20,9 @@
 }
 
 .navbar .nav-link:hover {
-  color: #ffd700 !important; /* gold hover */
+  color: #ffd700 !important;
 }
 
-/* Hamburger button custom color */
 .custom-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='red' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
@@ -33,11 +31,11 @@
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, #d4fc79, #96e6a1); /* green field vibe */
+  background: linear-gradient(to right, #d4fc79, #96e6a1);
   font-family: Arial, sans-serif;
 }
 
-/* Main content styling */
+/* Main content */
 .content {
   text-align: center;
   margin: 40px 0;
@@ -64,24 +62,24 @@ body {
 }
 
 /* Rectangular images with smooth edges */
-.images img {
+.images img, .header-content img:not(.logo_img) {
   width: 300px;
-  border-radius: 15px;  /* smooth edges */
+  border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  object-fit: cover;     /* ensure it fits nicely */
+  object-fit: cover;
 }
 
 /* Circular logo/favorite images */
 .favimg, .logo_img {
   width: 120px;
   height: 120px;
-  border-radius: 50%; /* circle */
+  border-radius: 50%;
   object-fit: cover;
   border: 3px solid #fff;
   margin: 10px 0;
 }
 
-/* Header section styling */
+/* Header section */
 .header-section {
   background-color: #1a1a1a;
   color: #fff;
@@ -122,14 +120,13 @@ body {
 .btn-primary:hover {
   background-color: #ff0000;
 }
-</style>
-
+  </style>
 </head>
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="#">
-      <img src="logo/logo.jpg" class="favimg"width="50" alt="Logo"> HAXHIM
+      <img src="logo/logo.jpg" class="favimg" alt="Logo"> HAXHIM
     </a>
     <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -147,24 +144,21 @@ body {
     </div>
   </nav>
 
-  <!-- Page Content -->
+  <!-- Header Content -->
   <div class="container header-section">
-  <div class="header-content">
-    <img class="logo_img" src="images/hashim.jpeg" alt="Ronaldo with Modric">
+    <div class="header-content">
+      <img src="images/hashim.jpeg" alt="Ronaldo with Modric"> <!-- Rectangular with smooth edges -->
 
-    <div class="text-content">
-      <h1>Football Stats Hub</h1>
-      <p>Discover stats, analysis, and highlights from the football world!</p>
-      <a href="ucl/ucl.html" class="btn btn-primary">View UCL Table</a>
-      
-      <!-- Third image below the text -->
-      <img class="logo_img" src="images/images.jpeg" alt="Third Image">
+      <div class="text-content">
+        <h1>Football Stats Hub</h1>
+        <p>Discover stats, analysis, and highlights from the football world!</p>
+        <a href="ucl/ucl.html" class="btn btn-primary">View UCL Table</a>
+        <img src="images/images.jpeg" class="logo_img" alt="Third Image"> <!-- Circular logo below text -->
+      </div>
+
+      <img src="images/ronaldo.jpeg" alt="Ronaldo Bicycle Kick"> <!-- Rectangular with smooth edges -->
     </div>
-
-    <img class="logo_img" src="images/ronaldo.jpeg" alt="Ronaldo Bicycle Kick">
   </div>
-</div>
-
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
