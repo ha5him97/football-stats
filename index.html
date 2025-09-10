@@ -9,11 +9,11 @@
   <style>
     /* Change header background */
     .navbar {
-      background: linear-gradient(to right, #1e3c72, #2a5298); /* Champions League blue */
+      background: linear-gradient(to right, #000000, #434343); /* black gradient */
     }
 
     /* Navbar text color */
-    .navbar .nav-link, 
+    .navbar .nav-link,
     .navbar-brand {
       color: white !important;
       font-weight: bold;
@@ -21,6 +21,11 @@
 
     .navbar .nav-link:hover {
       color: #ffd700 !important; /* gold hover */
+    }
+
+    /* Hamburger button custom color */
+    .custom-toggler .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='red' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
     }
 
     /* Body background */
@@ -31,10 +36,10 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Container styling */
+    /* Content styling */
     .content {
       text-align: center;
-      margin-top: 50px;
+      margin: 40px 0;
     }
 
     .content h1 {
@@ -46,6 +51,21 @@
     .content p {
       font-size: 1.2rem;
     }
+
+    .images {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .images img {
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
   </style>
 </head>
 <body>
@@ -54,24 +74,33 @@
     <a class="navbar-brand" href="#">
       <img src="your-logo.png" width="50" alt="Logo"> HAXHIM
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+    <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">UCL Table</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Players</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Messi(GOAT) Page</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Top Ten Young Players</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Top Players</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">RONALDO VS MESSI</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">UCL TABLE</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">ISL TABLE</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Player Stats</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- Page Content -->
   <div class="container content">
-    <h1>Football Stats</h1>
-    <p>Thank you for visiting my website!</p>
-    <a href="ucl.html" class="btn btn-primary">View UCL Table</a>
+    <div class="images">
+      <img src="ronaldo1.jpg" alt="Ronaldo with Modric">
+      <div>
+        <h1>Football Stats</h1>
+        <p>Thank you for visiting my website!</p>
+        <a href="ucl.html" class="btn btn-primary">View UCL Table</a>
+      </div>
+      <img src="ronaldo2.jpg" alt="Ronaldo Bicycle Kick">
+    </div>
   </div>
 
   <!-- Bootstrap JS -->
