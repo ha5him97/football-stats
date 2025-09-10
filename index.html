@@ -1,4 +1,3 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,88 +8,56 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link id="favicon" rel="icon" type="image/png" href="logo/logo.jpg">
-
+  <style>
+    .logo {
+      height: 50px;
+    }
+    .navbar {
+      background: #111;
+    }
+    .navbar a {
+      color: white !important;
+    }
+    .navbar-toggler {
+      border: none;
+      outline: none;
+    }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' 
+      xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255, 0.8%29' 
+      stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' 
+      d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+  </style>
 </head>
 <body>
 
   <header>
-    <div class="header-container">
-        <a href="index.html" class="logo-container">
-            <img src="logo/logo.jpg" alt="Haxhim Logo" class="logo">
-        </a>
-        <nav class="nav-links">
-            <a href="news/news.html">Messi's(GOAT) Page</a>
-            <a href="top-ten/home.html">Top Ten Young Players</a>
-            <a href="top_players/index.html">Top Players</a>
-            <a href="ronaldovsmessi/index.html">RONALDO VS MESSI</a>
-            <a href="ucl/ucl.html">UCL TABLE</a>
-            <a href="isl/isl.html">ISL TABLE</a>
-            <a href="ucl/ucl.html">UCL TABLE</a>
-            <a href="players/players.html">Player Stats</a>
-        </nav>
-    </div>
-</header>
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="index.html">
+        <img src="logo/logo.jpg" alt="Haxhim Logo" class="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="news/news.html">Messi's(GOAT) Page</a></li>
+          <li class="nav-item"><a class="nav-link" href="top-ten/home.html">Top Ten Young Players</a></li>
+          <li class="nav-item"><a class="nav-link" href="top_players/index.html">Top Players</a></li>
+          <li class="nav-item"><a class="nav-link" href="ronaldovsmessi/index.html">RONALDO VS MESSI</a></li>
+          <li class="nav-item"><a class="nav-link" href="ucl/ucl.html">UCL TABLE</a></li>
+          <li class="nav-item"><a class="nav-link" href="isl/isl.html">ISL TABLE</a></li>
+          <li class="nav-item"><a class="nav-link" href="players/players.html">Player Stats</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
-
-  <section id="spotlight">
-    <div class="container mt-5">
-      <div class="content-container">
-        <div class="side-image left-side">
-            <img src="images/images.jpeg" alt="Left Side Image" class="first">
-        </div>
-    
-        <main class="main-content">
-            <h1>Football Stats</h1>
-            <p>Thank you for visiting my website!</p>
-            <!-- Your main content, e.g., "Upcoming Matches" section -->
-        </main>
-    
-        <div class="side-image right-side">
-            <img src="images/ronaldo.jpeg" alt="Right Side Image">
-        </div>
-    </div>
-    
-      <section id="featured-matches" class="my-5">
-        <div class="row" id="matches-container">
-          <div id="match-list">
-            <h2>Upcoming Matches</h2>
-            <ul id="matches">
-              <!-- Matches will be listed here -->
-              <div id="pagination-controls">
-                <button id="prev-btn">Previous</button>
-                <button id="next-btn">Next</button>
-                <input type="text" id="team-filter" placeholder="Filter by Team">
-                <button onclick="filterMatches()">Filter</button>
-  
-              </div>
-              
-            </ul>
-          </div>
-          
-        </div>
-      </section>
-    </div>
-  </section>
+  <!-- Your spotlight + content stays here -->
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="js/scripts.js"></script>
-  <script src="js/match.js"></script>
-  <script src="js/matches.js"></script>
-  <footer>
-    <div class="footer-content">
-        <h3>haxhim</h3>
-        <p>Your one-stop hub for football stats, analysis, and gaming fun.</p>
-        <ul class="socials">
-            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-        </ul>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2024 haxhim. All Rights Reserved | Designed by You</p>
-    </div>
-</footer>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
