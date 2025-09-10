@@ -28,10 +28,45 @@
       stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' 
       d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
     }
+    #spotlight {
+      margin-top: 40px;
+      text-align: center;
+    }
+    #spotlight .content-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+    }
+    #spotlight img {
+      max-width: 200px;
+      border-radius: 10px;
+    }
+    #spotlight .main-content h1 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+    #spotlight .main-content p {
+      font-size: 1.2rem;
+      color: #444;
+    }
+    .custom-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #28a745; /* Changed to green */
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .custom-btn:hover {
+      background: #218838;
+    }
   </style>
 </head>
 <body>
 
+  <!-- Header with hamburger -->
   <header>
     <nav class="navbar navbar-expand-lg">
       <a class="navbar-brand" href="index.html">
@@ -55,7 +90,24 @@
     </nav>
   </header>
 
-  <!-- Your spotlight + content stays here -->
+  <!-- Spotlight Section -->
+  <section id="spotlight">
+    <div class="container">
+      <div class="content-container">
+        <div class="side-image left-side">
+          <img src="images/images.jpeg" alt="Left Side Image">
+        </div>
+        <main class="main-content">
+          <h1>Football Stats</h1>
+          <p>Thank you for visiting my website!</p>
+          <a href="ucl/ucl.html" class="custom-btn">View UCL Table</a>
+        </main>
+        <div class="side-image right-side">
+          <img src="images/ronaldo.jpeg" alt="Right Side Image">
+        </div>
+      </div>
+    </div>
+  </section>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
