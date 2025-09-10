@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Football Stats</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="icon" type="image/png" href="logo/logo.jpg">
+
 
   <style>
     /* Change header background */
@@ -66,13 +68,20 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
+    .logo_img {
+    width: 100px;      /* Set the width you want */
+    height: 100px;     /* Set the height you want */
+    border-radius: 50%; /* Makes it a perfect circle */
+    object-fit: cover;  /* Ensures the image covers the circle without distortion */
+}
+
   </style>
 </head>
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="#">
-      <img src="logo/logo.jpg" width="50" alt="Logo"> HAXHIM
+      <img src="logo/logo.jpg" class="logo_img"width="50" alt="Logo"> HAXHIM
     </a>
     <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
