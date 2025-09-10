@@ -3,144 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Football Stats & Analysis Hub</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link id="favicon" rel="icon" type="image/png" href="logo/logo.jpg">
+  <title>Football Stats</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
   <style>
-    .logo {
-      height: 50px;
-    }
+    /* Change header background */
     .navbar {
-      background: #111;
+      background: linear-gradient(to right, #1e3c72, #2a5298); /* Champions League blue */
     }
-    .navbar a {
+
+    /* Navbar text color */
+    .navbar .nav-link, 
+    .navbar-brand {
       color: white !important;
+      font-weight: bold;
     }
-    .navbar-toggler {
-      border: none;
-      outline: none;
+
+    .navbar .nav-link:hover {
+      color: #ffd700 !important; /* gold hover */
     }
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' 
-      xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255, 0.8%29' 
-      stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' 
-      d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+
+    /* Body background */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #d4fc79, #96e6a1); /* green field vibe */
+      font-family: Arial, sans-serif;
     }
-    #spotlight {
-      margin-top: 40px;
+
+    /* Container styling */
+    .content {
       text-align: center;
+      margin-top: 50px;
     }
-    #spotlight .content-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 30px;
+
+    .content h1 {
+      color: #007bff;
+      font-size: 3rem;
+      font-weight: bold;
     }
-    #spotlight img {
-      max-width: 200px;
-      border-radius: 10px;
-    }
-    #spotlight .main-content h1 {
-      font-size: 2rem;
-      margin-bottom: 15px;
-    }
-    #spotlight .main-content p {
+
+    .content p {
       font-size: 1.2rem;
-      color: #444;
     }
-    .custom-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #28a745; /* Changed to green */
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-    }
-    .custom-btn:hover {
-      background: #218838;
-    }
-    /* Change the background of the button */
-    .navbar-toggler {
-      background-color: #28a745; /* Green background */
-      border-radius: 5px;
-    }
-    
-    /* Change the hamburger (3 lines) color */
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30'
-      xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)'
-      stroke-width='2' stroke-linecap='round' stroke-miterlimit='10'
-      d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-      
-    }
-    /* Change navbar background */
-.navbar {
-  background-color: #1e3c72 !important;  /* Dark blue gradient start */
-  background-image: linear-gradient(to right, #1e3c72, #2a5298); /* Gradient */
-}
-
-/* Change text color inside navbar */
-.navbar a {
-  color: white !important;
-}
-
-/* Optional: change on hover */
-.navbar a:hover {
-  color: #ffd700 !important; /* Golden hover */
-}
-
-
   </style>
 </head>
 <body>
-
-  <!-- Header with hamburger -->
-  <header>
-    <nav class="navbar navbar-expand-lg">
-      <a class="navbar-brand" href="index.html">
-        <img src="logo/logo.jpg" alt="Haxhim Logo" class="logo">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link" href="news/news.html">Messi's(GOAT) Page</a></li>
-          <li class="nav-item"><a class="nav-link" href="top-ten/home.html">Top Ten Young Players</a></li>
-          <li class="nav-item"><a class="nav-link" href="top_players/index.html">Top Players</a></li>
-          <li class="nav-item"><a class="nav-link" href="ronaldovsmessi/index.html">RONALDO VS MESSI</a></li>
-          <li class="nav-item"><a class="nav-link" href="ucl/ucl.html">UCL TABLE</a></li>
-          <li class="nav-item"><a class="nav-link" href="isl/isl.html">ISL TABLE</a></li>
-          <li class="nav-item"><a class="nav-link" href="players/players.html">Player Stats</a></li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Spotlight Section -->
-  <section id="spotlight">
-    <div class="container">
-      <div class="content-container">
-        <div class="side-image left-side">
-          <img src="images/images.jpeg" alt="Left Side Image">
-        </div>
-        <main class="main-content">
-          <h1>Football Stats</h1>
-          <p>Thank you for visiting my website!</p>
-          <a href="ucl/ucl.html" class="custom-btn">View UCL Table</a>
-        </main>
-        <div class="side-image right-side">
-          <img src="images/ronaldo.jpeg" alt="Right Side Image">
-        </div>
-      </div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#">
+      <img src="your-logo.png" width="50" alt="Logo"> HAXHIM
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">UCL Table</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Players</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
     </div>
-  </section>
+  </nav>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- Page Content -->
+  <div class="container content">
+    <h1>Football Stats</h1>
+    <p>Thank you for visiting my website!</p>
+    <a href="ucl.html" class="btn btn-primary">View UCL Table</a>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
