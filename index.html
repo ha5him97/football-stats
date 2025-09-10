@@ -68,11 +68,59 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
-    .logo_img {
+    .favimg {
     width: 60px;      /* Set the width you want */
     height: 60px;     /* Set the height you want */
     border-radius: 50%; /* Makes it a perfect circle */
     object-fit: cover;  /* Ensures the image covers the circle without distortion */
+}
+.header-section {
+  background-color: #1a1a1a;
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.logo_img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  margin: 10px 0;
+}
+
+.text-content h1 {
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+
+.text-content p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.btn-primary {
+  background-color: #ff4c4c;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #ff0000;
 }
 
   </style>
@@ -81,7 +129,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="#">
-      <img src="logo/logo.jpg" class="logo_img"width="50" alt="Logo"> HAXHIM
+      <img src="logo/logo.jpg" class="favimg"width="50" alt="Logo"> HAXHIM
     </a>
     <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
