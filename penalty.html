@@ -1,182 +1,826 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>3D Penalty Shootout</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pro 3D Penalty Shootout — Advanced</title>
 <style>
-  body{margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0b2a3a;color:#fff;font-family:sans-serif}
-  canvas{background:linear-gradient(#176b4e,#1b8a66);border:4px solid #fff;border-radius:10px}
-  .hud{margin-top:15px;text-align:center}
-  .scoreboard{margin:10px;font-size:20px}
-  .power-bar{width:200px;height:20px;background:#333;border-radius:6px;overflow:hidden;margin:10px auto}
-  #power{height:100%;width:0;background:red;transition:width 0.05s}
-  button{margin:5px;padding:10px 16px;border:none;border-radius:6px;background:#ffcc00;color:#000;font-weight:bold;cursor:pointer}
+  :root{
+    --bg1:#05121a; --bg2:#08313a; --accent:#ffd100; --muted:#9fb5c0;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:#eaf6ff;display:flex;align-items:center;justify-content:center;padding:18px;}
+  .wrap{width:1100px;max-width:98vw;display:grid;grid-template-columns:1fr 360px;gap:16px;}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04)); border-radius:12px; box-shadow:0 8px 28px rgba(0,0,0,0.6); overflow:hidden;}
+  .field{padding:14px;height:640px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;}
+  canvas{width:100%;height:100%;display:block;border-radius:10px;background:#0b3a22;}
+  .panel{padding:16px;min-height:640px;box-sizing:border-box;}
+  h1{margin:2px 0 8px 0;color:var(--accent);font-size:18px;}
+  .teams{display:flex;gap:10px;margin-bottom:12px;}
+  .team{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;flex:1}
+  .team img{width:44px;height:44px;border-radius:6px;object-fit:cover;background:#fff2}
+  .name{font-weight:700}
+  .scoreRow{display:flex;gap:8px;margin-bottom:12px}
+  .score{flex:1;background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;text-align:center}
+  .score .n{font-size:30px;font-weight:800;color:var(--accent)}
+  .controls{display:grid;gap:10px}
+  .row{display:flex;gap:8px;align-items:center}
+  .muted{color:var(--muted);font-size:13px}
+  .power{height:18px;background:rgba(255,255,255,0.06);border-radius:8px;overflow:hidden}
+  .power > div{height:100%;width:0;background:linear-gradient(90deg,#ffd100,#ff7a00)}
+  select,input[type=range]{width:100%;appearance:none;background:rgba(255,255,255,0.03);color:inherit;padding:8px;border-radius:8px;border:0}
+  button{background:var(--accent);color:#062528;border:0;padding:10px;border-radius:8px;font-weight:700;cursor:pointer}
+  .message{margin-top:8px;padding:10px;background:rgba(255,255,255,0.02);border-radius:8px;min-height:48px}
+  .hint{font-size:13px;color:var(--muted);margin-top:6px}
+  footer{font-size:12px;color:var(--muted);margin-top:10px}
+  @media (max-width:980px){.wrap{grid-template-columns:1fr}.panel{order:2}}
 </style>
 </head>
 <body>
-
-<canvas id="game" width="900" height="600"></canvas>
-
-<div class="hud">
-  <div class="scoreboard">
-    Player <span id="pScore">0</span> - <span id="cScore">0</span> Computer  
-    (<span id="turnInfo">Player</span>'s turn)
+<div class="wrap">
+  <div class="card field">
+    <canvas id="canvas" width="960" height="640" aria-label="Penalty pitch"></canvas>
   </div>
-  <div class="power-bar"><div id="power"></div></div>
-  <button id="shootBtn">Hold Space / Click to Shoot</button>
-  <div id="message"></div>
+
+  <div class="card panel" role="region" aria-label="controls">
+    <h1>Pro 3D Penalty Shootout</h1>
+
+    <div class="teams">
+      <div class="team"><img id="teamAimg" src="" alt="Team A"><div><div id="teamAname" class="name" contenteditable>Haxhim</div><div class="muted">Player</div></div></div>
+      <div class="team"><img id="teamBimg" src="" alt="Team B"><div><div id="teamBname" class="name" contenteditable>Opponents</div><div class="muted">Computer</div></div></div>
+    </div>
+
+    <div class="scoreRow">
+      <div class="score"><div class="muted">Player</div><div id="scoreA" class="n">0</div><div class="muted">Shots <span id="takenA">0</span>/<span id="shotsDisplay">5</span></div></div>
+      <div class="score"><div class="muted">Computer</div><div id="scoreB" class="n">0</div><div class="muted">Shots <span id="takenB">0</span>/<span id="shotsDisplay2">5</span></div></div>
+    </div>
+
+    <div class="controls">
+      <div class="row">
+        <div style="flex:1">
+          <div class="muted">Difficulty</div>
+          <select id="difficulty"><option value="0.45">Beginner</option><option value="0.75" selected>Semi-Pro</option><option value="0.92">Pro</option></select>
+        </div>
+        <div style="width:110px">
+          <div class="muted">Shots/side</div>
+          <select id="shotsPerSide"><option>3</option><option selected>5</option><option>7</option></select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <div class="muted">Aim: Click aim strip (or use ← →). Use curve slider or press ←/→ during flight to bend.</div>
+          <div id="aimStrip" style="margin-top:6px;background:rgba(255,255,255,0.02);border-radius:8px;padding:12px;cursor:crosshair;text-align:center">Aim: <span id="aimLabel">Center</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <div class="muted">Curve (pre-kick) -1..1</div>
+          <input id="curveSlider" type="range" min="-1" max="1" step="0.01" value="0">
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <div class="muted">Power (hold Shoot)</div>
+          <div class="power"><div id="powerFill"></div></div>
+        </div>
+        <div style="width:132px">
+          <button id="shoot">Hold &amp; Release to Shoot</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="restart">Restart Match</button>
+        <button id="toggleAuto">Auto-play AI: OFF</button>
+      </div>
+
+      <div id="status" class="message">Player kicks first. Use Aim strip and hold Shoot to charge. Press Space to charge/shoot too.</div>
+
+      <div class="row" style="margin-top:6px;align-items:center">
+        <div style="flex:1">
+          <div class="muted">Match history</div>
+          <select id="history" style="width:100%;"></select>
+        </div>
+        <div><button id="saveResult">Save</button></div>
+      </div>
+
+      <div class="hint">Controls: Click aim strip or Arrow keys to aim. Hold Shoot button or Space to charge, release to shoot. During flight press ← / → to apply curve while ball is in air (limited window).</div>
+
+      <footer>Tip: Replace logos by setting the image src via DevTools or edit the src attributes at top of file.</footer>
+    </div>
+  </div>
 </div>
 
 <script>
-const canvas=document.getElementById("game"),ctx=canvas.getContext("2d");
-const pScoreEl=document.getElementById("pScore"),cScoreEl=document.getElementById("cScore"),turnInfo=document.getElementById("turnInfo");
-const msg=document.getElementById("message"),powerEl=document.getElementById("power");
+/* Pro 3D-like Penalty Shootout
+   - Fake 3D perspective projection
+   - Curve control (slider pre-kick + arrow keys during flight)
+   - Keeper is circular and scales with depth
+   - Trajectory line drawn (no final dots)
+   - Net ripple on goal
+   - Crowd SFX (WebAudio synth)
+   - Turn-based with sudden-death, AI difficulty, history
+*/
 
-let turn="player",playerScore=0,compScore=0,pShots=0,cShots=0,shotsEach=5;
-let charging=false,power=0,ball=null,keeper=null,inPlay=false;
-let trail=[]; // trajectory line
+/* ----------------------
+   Config & DOM bindings
+   ---------------------- */
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d', { alpha: false });
+let W = canvas.width = 960;
+let H = canvas.height = 640;
 
-function resetBall(){
-  ball={x:450,y:520,z:0,vx:0,vy:0,vz:0,r:15,inAir:false};
-  trail=[];
+const scoreAEl = document.getElementById('scoreA');
+const scoreBEl = document.getElementById('scoreB');
+const takenAEl = document.getElementById('takenA');
+const takenBEl = document.getElementById('takenB');
+const shotsDisplay = document.getElementById('shotsDisplay');
+const shotsDisplay2 = document.getElementById('shotsDisplay2');
+const statusEl = document.getElementById('status');
+const powerFill = document.getElementById('powerFill');
+const shootBtn = document.getElementById('shoot');
+const restartBtn = document.getElementById('restart');
+const aimStrip = document.getElementById('aimStrip');
+const aimLabel = document.getElementById('aimLabel');
+const curveSlider = document.getElementById('curveSlider');
+const difficultySel = document.getElementById('difficulty');
+const shotsPerSideSel = document.getElementById('shotsPerSide');
+const toggleAutoBtn = document.getElementById('toggleAuto');
+const historySel = document.getElementById('history');
+const saveResultBtn = document.getElementById('saveResult');
+
+/* ----------------------
+   Game State
+   ---------------------- */
+let shotsPerSide = parseInt(shotsPerSideSel.value, 10);
+let difficulty = parseFloat(difficultySel.value); // AI "skill"
+
+let scoreA = 0, scoreB = 0, takenA = 0, takenB = 0;
+let turn = 'player'; // 'player' or 'ai' or 'done'
+let suddenDeath = false;
+let autoPlayAI = false;
+
+// power & aim
+let charging = false, powerPct = 0;
+let aimX = 0.5; // 0..1 left->right
+let preCurve = parseFloat(curveSlider.value);
+
+// flying ball state
+let ball = null; // {x,y,z,vx,vy,vz,r,frames,age,curveAcc}
+let trail = []; // screen-space points for trajectory
+let inAnimation = false;
+
+// keeper
+let keeper = { x: 0.5, y: 0.18, z: 200, r: 40, dive:'center', diveStart:0, targetRel:0 };
+
+// perspective geometry constants
+const PROJ = {
+  eyeZ: 300,      // camera distance
+  goalZ: 200,     // z at goal mouth
+  goalWidth: 0.6, // fraction of canvas width
+  penaltyY: 0.66,
+  ballStartY: 0.78
+};
+
+// history storage
+const STORAGE_KEY = 'penalty_pro3d_history_v1';
+function saveHistoryEntry(entry){
+  const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  arr.push(entry);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+  loadHistory();
 }
-function resetKeeper(){
-  keeper={x:450,y:100,z:200,r:40,dive:"center"};
+function loadHistory(){
+  const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  historySel.innerHTML = '';
+  arr.slice().reverse().forEach((e,i)=>{
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${e.date} — ${e.player} ${e.scoreA}-${e.scoreB} ${e.opponent}`;
+    historySel.appendChild(opt);
+  });
 }
-resetBall();resetKeeper();
+loadHistory();
 
-// Fake 3D projection
-function project(x,y,z){
-  let scale=300/(z+300);
-  return {x:450+(x-450)*scale,y:y*scale+50,z,scale};
+/* ----------------------
+   Audio: simple crowd & effects (WebAudio)
+   ---------------------- */
+let audioCtx = null;
+function ensureAudioCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 }
-
-function drawField(){
-  ctx.fillStyle="#1b8a66";ctx.fillRect(0,0,900,600);
-  ctx.strokeStyle="#fff";ctx.lineWidth=2;
-  // Perspective goal (trapezoid)
-  ctx.beginPath();
-  ctx.moveTo(300,100);ctx.lineTo(600,100);
-  ctx.lineTo(500,50);ctx.lineTo(400,50);
-  ctx.closePath();ctx.stroke();
+function playBeep(freq, time=0.12, type='sine', vol=0.08){
+  try{
+    ensureAudioCtx();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = type;
+    o.frequency.value = freq;
+    g.gain.value = vol;
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + time);
+    setTimeout(()=>o.stop(), time*1000 + 30);
+  }catch(e){}
 }
-
-function drawBall(){
-  if(trail.length>1){
-    ctx.beginPath();
-    ctx.moveTo(trail[0].x,trail[0].y);
-    for(let i=1;i<trail.length;i++){
-      ctx.lineTo(trail[i].x,trail[i].y);
+function crowdCheer(){
+  try{
+    ensureAudioCtx();
+    for(let i=0;i<4;i++){
+      setTimeout(()=>playBeep(220 + Math.random()*300, 0.08, 'square', 0.04 + Math.random()*0.06), i*70);
     }
-    ctx.strokeStyle="yellow";ctx.lineWidth=2;ctx.stroke();
+  }catch(e){}
+}
+function crowdGroan(){
+  playBeep(130, 0.18, 'sawtooth', 0.16);
+}
+function keeperSaveSfx(){
+  playBeep(480,0.08,'sine',0.06);
+  playBeep(360,0.12,'sine',0.05);
+}
+
+/* ----------------------
+   Utility: projection & drawing helpers
+   ---------------------- */
+function project(x, y, z){
+  // x,y in canvas pixels, z in depth (0 near, + deeper -> smaller)
+  // we treat start x/y as screen-space coordinates
+  const scale = PROJ.eyeZ / (PROJ.eyeZ + (z || 0));
+  return { x: (x - W/2)*scale + W/2, y: (y - 50)*scale + 50, scale };
+}
+function worldToScreen(wx, wy, wz){
+  // wx is between 0..1 across pitch; map to pixel x
+  const gw = W * PROJ.goalWidth;
+  const left = (W - gw)/2;
+  const px = left + wx * gw;
+  const py = H * wy;
+  return project(px, py, wz);
+}
+
+/* ----------------------
+   Drawing: pitch, goal, ball, keeper, net ripple
+   ---------------------- */
+let netPulse = 0; // ripple animation on goal
+function drawPitch(){
+  // background grass
+  ctx.fillStyle = '#114f33';
+  ctx.fillRect(0,0,W,H);
+
+  // subtle stripes
+  const stripes = 8;
+  for(let i=0;i<stripes;i++){
+    ctx.fillStyle = (i%2===0) ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)';
+    ctx.fillRect(0, i*(H/stripes), W, H/stripes);
   }
-  let p=project(ball.x,ball.y,ball.z);
+
+  // stadium top band
+  const ch = H*0.12;
+  const g = ctx.createLinearGradient(0,0,0,ch);
+  g.addColorStop(0,'rgba(10,20,30,0.9)');
+  g.addColorStop(1,'rgba(8,14,20,0.7)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,W,ch);
+
+  // draw perspective goal mouth (trapezoid)
+  const gw = W * PROJ.goalWidth;
+  const gx = (W - gw)/2;
+  const gy = 50;
+  const backTopLeft = {x: gx + gw*0.12, y: gy + 6};
+  const backTopRight = {x: gx + gw*0.88, y: gy + 6};
+  const frontTopLeft = {x: gx + gw*0.02, y: gy + 42};
+  const frontTopRight = {x: gx + gw*0.98, y: gy + 42};
+
+  // posts & crossbar
+  ctx.strokeStyle = '#edf7ff';
+  ctx.lineWidth = Math.max(3, W*0.006);
   ctx.beginPath();
-  ctx.arc(p.x,p.y,ball.r*p.scale,0,Math.PI*2);
-  ctx.fillStyle="#fff";ctx.fill();
+  ctx.moveTo(backTopLeft.x, backTopLeft.y);
+  ctx.lineTo(backTopRight.x, backTopRight.y);
+  ctx.lineTo(frontTopRight.x, frontTopRight.y);
+  ctx.lineTo(frontTopLeft.x, frontTopLeft.y);
+  ctx.closePath();
+  ctx.stroke();
+
+  // faint goal box
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(gx + gw*0.08, gy + 6, gw*0.84, 120);
+
+  // penalty spot
+  ctx.fillStyle = '#fff';
+  const ppx = W*0.5, ppy = H * PROJ.penaltyY;
+  ctx.beginPath(); ctx.arc(ppx, ppy, Math.max(4, W*0.005), 0, Math.PI*2); ctx.fill();
 }
 
-function drawKeeper(){
-  let p=project(keeper.x,keeper.y,keeper.z);
+function drawNetRipple(){
+  if(netPulse <= 0) return;
+  const gw = W * PROJ.goalWidth;
+  const gx = (W - gw)/2;
+  const gy = 50;
+  const cx = W*0.5;
+  const cy = gy + 18;
+  const maxR = gw * 0.24;
+  ctx.save();
+  ctx.globalAlpha = Math.max(0, 0.9 - netPulse/10);
   ctx.beginPath();
-  ctx.arc(p.x,p.y,keeper.r*p.scale,0,Math.PI*2);
-  ctx.fillStyle="#222";ctx.fill();
+  ctx.ellipse(cx, cy, maxR * (0.3 + 0.7 * Math.min(1, netPulse/8)), (maxR*0.5) * (0.3 + 0.7 * Math.min(1, netPulse/8)), 0, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,220,90,0.09)';
+  ctx.fill();
+  ctx.restore();
+  netPulse *= 0.86;
+  if(netPulse < 0.02) netPulse = 0;
 }
 
-function update(){
-  drawField();
+/* draw keeper (circle) scaling with depth */
+function drawKeeperScreen(kxRel, kyRel, kz){
+  // kxRel is 0..1 relative across goal width
+  const gw = W * PROJ.goalWidth;
+  const left = (W - gw)/2;
+  const realX = left + kxRel * gw;
+  const realY = H * kyRel;
+  const p = project(realX, realY, kz);
+  const scale = p.scale;
+  const rad = keeper.r * scale;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, rad, 0, Math.PI*2);
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fill();
+  // small shin highlight
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = Math.max(1, W*0.002);
+  ctx.stroke();
+}
 
-  if(ball.inAir){
-    ball.x+=ball.vx;
-    ball.y+=ball.vy;
-    ball.z+=ball.vz;
-    ball.vy+=0.2; // gravity
+/* draw ball given world coords */
+function drawBallScreen(b){
+  const p = project(b.x, b.y, b.z);
+  // ball shadow (ellipse)
+  ctx.save();
+  const shadowScale = Math.max(0.2, p.scale * 0.7);
+  ctx.beginPath();
+  ctx.ellipse(p.x, p.y + b.r * p.scale * 0.9, b.r * p.scale * 1.1, b.r * p.scale * 0.45, 0, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(0,0,0,0.25)';
+  ctx.fill();
+  ctx.restore();
 
-    let p=project(ball.x,ball.y,ball.z);
-    trail.push({x:p.x,y:p.y});
-    if(trail.length>30) trail.shift();
+  // ball body
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, b.r * p.scale, 0, Math.PI*2);
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
 
-    // Goal line = z ~ 200
-    if(ball.z>=200){
-      let dx=ball.x-keeper.x,dy=ball.y-keeper.y;
-      let dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<keeper.r){
-        msg.textContent=(turn==="player"?"❌ Saved!":"❌ Computer shot saved!");
-        endShot(false);return;
+/* draw trajectory line (using screen-space trail) */
+function drawTrail(){
+  if(trail.length < 2) return;
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(trail[0].x, trail[0].y);
+  for(let i=1;i<trail.length;i++){
+    ctx.lineTo(trail[i].x, trail[i].y);
+  }
+  // gradient that fades
+  const g = ctx.createLinearGradient(trail[0].x, trail[0].y, trail[trail.length-1].x, trail[trail.length-1].y);
+  g.addColorStop(0, 'rgba(255,215,0,0.9)');
+  g.addColorStop(1, 'rgba(255,215,0,0.15)');
+  ctx.strokeStyle = g;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.restore();
+}
+
+/* ----------------------
+   Game flow & physics
+   ---------------------- */
+
+// reset game
+function resetMatch(){
+  scoreA = 0; scoreB = 0; takenA = 0; takenB = 0; suddenDeath = false;
+  turn = 'player';
+  updateUI();
+  statusEl.textContent = 'Match reset. Player kicks first.';
+  resetBallState();
+}
+
+// reset ball & trail
+function resetBallState(){
+  // place ball at center penalty start (screen px coords)
+  const startX = W * 0.5;
+  const startY = H * PROJ.ballStartY;
+  ball = {
+    x: startX, y: startY, z: 0, // z depth 0 at kicker, increases towards goal
+    vx: 0, vy: 0, vz: 0,
+    r: Math.max(10, W*0.012),
+    inAir: false,
+    age: 0,
+    maxFrames: 0,
+    curveAcc: 0
+  };
+  trail = [];
+  inAnimation = false;
+  keeper = { x: 0.5, y: PROJ.goalY || 0.18, z: PROJ.goalZ, r: Math.max(36, W*0.04), dive:'center', diveStart:0, targetRel:0 };
+  // place keeper center
+  keeper.x = 0.5;
+}
+
+// start player's shot
+function playerShoot(powerFrac, aimRel, curveVal){
+  if(inAnimation || turn !== 'player') return;
+  inAnimation = true;
+  ball.age = 0;
+  // map aimRel to target screen x at goal depth
+  const gw = W * PROJ.goalWidth;
+  const gx = (W - gw)/2;
+  const targetX = gx + lerp(gw*0.12, gw*0.88, aimRel);
+  const startX = W * 0.5;
+  const startY = H * PROJ.ballStartY;
+  const targetZ = PROJ.goalZ;
+  // flight time (frames): stronger power -> faster flight
+  const flightTimeSec = lerp(0.75, 0.45, powerFrac);
+  const frames = Math.max(28, Math.round(flightTimeSec * 60));
+  ball.maxFrames = frames;
+  // velocities in pixels/frame
+  ball.vx = (targetX - startX) / frames;
+  ball.vz = (targetZ - ball.z) / frames;
+  // provide upward motion (vy negative) to simulate arc
+  const peakOffset = lerp(-120, -40, powerFrac);
+  ball.vy = (peakOffset - 0) / frames; // to reach peak roughly
+  // curve acceleration set by preCurve + curveVal
+  ball.curveAcc = clamp(curveVal + preCurve, -0.12, 0.12);
+  // keeper AI decision: predict
+  configureKeeperAIForShot(aimRel, powerFrac);
+  // mark inAir
+  ball.inAir = true;
+  statusEl.textContent = 'Shot taken...';
+  // play kickoff tone
+  playBeep(420 + Math.random()*80, 0.06, 'sine', 0.06);
+}
+
+// start AI shoot
+function aiShoot(){
+  if(inAnimation || turn !== 'ai') return;
+  inAnimation = true;
+  ball.age = 0;
+  // AI chooses aim, power, curve based on difficulty
+  const aiSkill = difficulty;
+  const r = Math.random();
+  let aimRel;
+  if(r < aiSkill * 0.6) aimRel = (Math.random() < 0.5 ? 0.18 : 0.82); // corners
+  else aimRel = 0.5 + (Math.random()-0.5) * 0.6;
+  const powerFrac = lerp(0.6, 0.95, Math.random() * aiSkill + aiSkill*0.2);
+  const curveVal = (Math.random()-0.5) * 0.6;
+  // call same physics
+  // compute targetX etc (reuse logic)
+  const gw = W * PROJ.goalWidth;
+  const gx = (W - gw)/2;
+  const targetX = gx + lerp(gw*0.12, gw*0.88, aimRel);
+  const startX = W * 0.5;
+  const targetZ = PROJ.goalZ;
+  const flightTimeSec = lerp(0.75, 0.45, powerFrac);
+  const frames = Math.max(28, Math.round(flightTimeSec * 60));
+  ball.maxFrames = frames;
+  ball.vx = (targetX - startX) / frames;
+  ball.vz = (targetZ - ball.z) / frames;
+  ball.vy = (lerp(-120,-40,powerFrac))/frames;
+  ball.curveAcc = clamp(curveVal + preCurve, -0.12, 0.12);
+  configureKeeperAIForShot(aimRel, powerFrac);
+  ball.inAir = true;
+  statusEl.textContent = 'Computer takes the shot...';
+  playBeep(360, 0.06, 'sine', 0.06);
+}
+
+/* Keeper AI: decide targetRel and reaction timing */
+function configureKeeperAIForShot(aimRel, powerFrac){
+  // AI predicts with some accuracy influenced by difficulty
+  const guessProb = difficulty; // 0..1
+  let predicted = aimRel;
+  if(Math.random() > guessProb){
+    // wrong guess -> choose opposite or center
+    predicted = Math.random() < 0.5 ? clamp(1 - aimRel, 0.05, 0.95) : 0.5;
+  }
+  // map predicted to keeper rel within [0.05,0.95]
+  keeper.targetRel = clamp((predicted - 0.5) * 1.4 + 0.5, 0.05, 0.95);
+  // reaction frames: better AI reacts faster
+  keeper.diveStart = Math.round(4 + (1 - difficulty) * 14 + Math.random()*4);
+  keeper.dive = 'center';
+}
+
+/* Called every frame to animate ball and keeper */
+function animateFrame(){
+  // clear & draw
+  ctx.clearRect(0,0,W,H);
+  drawPitch();
+
+  // if ball in air -> update physics
+  if(ball && ball.inAir){
+    ball.age++;
+    // apply velocities
+    ball.x += ball.vx + ball.curveAcc * Math.max(0, ball.age - 2); // curve applied progressively
+    ball.y += ball.vy;
+    ball.z += ball.vz;
+    // gravity subtle effect on vy (so arc slightly curves down)
+    ball.vy += 0.18;
+
+    // record screen-space point for trail
+    const screen = project(ball.x, ball.y, ball.z);
+    trail.push({x: screen.x, y: screen.y});
+    if(trail.length > 36) trail.shift();
+
+    // Keeper dive logic: start dive after diveStart frames
+    if(ball.age >= keeper.diveStart){
+      // compute dive progress normalized 0..1
+      const t = clamp((ball.age - keeper.diveStart) / Math.max(8, ball.maxFrames - keeper.diveStart), 0, 1);
+      // update keeper x towards targetRel smoothly
+      const interp = lerp(keeper.x, keeper.targetRel, Math.pow(t, 1.15));
+      keeper.x = interp;
+    }
+
+    // goal collision check: when ball.z >= goalZ threshold
+    if(ball.z >= PROJ.goalZ){
+      // compute screen coords of keeper and ball at goal depth
+      const gw = W * PROJ.goalWidth;
+      const left = (W - gw)/2;
+      // map keeper.x (0..1) to pixel
+      const keeperPx = left + keeper.x * gw;
+      // ball x is in px already
+      const dx = ball.x - keeperPx;
+      const dy = ball.y - project(0,0,PROJ.goalZ).y; // relative, but we just check horizontal
+      const dist = Math.abs(dx); // horizontal distance is main intercept metric
+      // decide if keeper reaches ball: if keeper within reach radius (scales with depth)
+      const kRadiusPx = keeper.r * project(0,0,PROJ.goalZ).scale;
+      if(dist <= kRadiusPx + ball.r * project(0,0,PROJ.goalZ).scale){
+        // save
+        onShotResolved({ goal: false, saved: true });
       } else {
-        msg.textContent=(turn==="player"?"⚽ Goal!":"💻 Computer scores!");
-        if(turn==="player"){playerScore++;pScoreEl.textContent=playerScore;}
-        else{compScore++;cScoreEl.textContent=compScore;}
-        endShot(true);return;
+        // goal
+        onShotResolved({ goal: true, saved: false });
+      }
+    } else if(ball.y > H + 50 || ball.x < -100 || ball.x > W + 100){
+      // out of bounds - missed
+      onShotResolved({ goal: false, saved: false });
+    }
+  }
+
+  // draw trail first
+  drawTrail();
+
+  // draw ball if present
+  if(ball){ drawBallScreen(ball); }
+
+  // draw keeper
+  drawKeeperScreen(keeper.x, keeper.y, PROJ.goalZ);
+
+  // draw net ripple
+  drawNetRipple();
+
+  // UI/loop
+  requestAnimationFrame(animateFrame);
+}
+
+/* Shot end handler */
+function onShotResolved(result){
+  // prevent multiple resolves
+  if(!ball || !ball.inAir) return;
+  ball.inAir = false; inAnimation = false;
+  // stash trail a bit then clear next reset
+  if(result.goal){
+    // goal effects
+    netPulse = 8;
+    crowdCheer();
+    statusEl.textContent = (turn === 'player') ? 'GOAL! What a strike!' : 'Computer scored.';
+    if(turn === 'player') scoreA++; else scoreB++;
+  } else if(result.saved){
+    keeperSaveSfx();
+    statusEl.textContent = (turn === 'player') ? 'Saved by the keeper!' : 'Great save by keeper.';
+  } else {
+    crowdGroan();
+    statusEl.textContent = (turn === 'player') ? 'Missed! Off target.' : 'Computer missed.';
+  }
+
+  // update taken counts
+  if(turn === 'player') takenA++; else takenB++;
+
+  // update scoreboard display
+  updateUI();
+
+  // decide next step after a short delay
+  setTimeout(()=> {
+    // if both sides completed shots for normal phase
+    if(!suddenDeath && takenA >= shotsPerSide && takenB >= shotsPerSide){
+      // check final
+      if(scoreA !== scoreB){
+        endMatch();
+        return;
+      } else {
+        suddenDeath = true; statusEl.textContent = 'Sudden death! Each side takes 1 shot.';
       }
     }
 
-    if(ball.y>600||ball.x<0||ball.x>900){
-      msg.textContent="Missed!";
-      endShot(false);return;
+    // turn switching
+    if(turn === 'player'){
+      // switch to AI
+      turn = 'ai';
+      statusEl.textContent = 'Computer preparing...';
+      // small delay before AI shoots
+      setTimeout(()=>{ 
+        resetBallState(); // ensure ball at start
+        aiShoot();
+      }, 650);
+    } else if(turn === 'ai'){
+      // back to player
+      turn = 'player';
+      resetBallState();
+      statusEl.textContent = 'Your turn — aim & shoot.';
+      // if autoPlay for player is ON, auto shoot
+      if(autoPlayAI && !inAnimation){
+        // auto pick aim & power
+        aimX = Math.random()*0.6 + 0.2;
+        aimLabel.textContent = aimLabelFrom(aimX);
+        setTimeout(()=> { startAutoPlayerShot(); }, 700);
+      }
+    }
+
+  }, 900);
+}
+
+/* Finish match */
+function endMatch(){
+  turn = 'done';
+  if(scoreA > scoreB) statusEl.textContent = '🎉 You win the shootout!';
+  else statusEl.textContent = '💻 Computer wins the shootout.';
+}
+
+/* ----------------------
+   Input handlers and UI
+   ---------------------- */
+function updateUI(){
+  scoreAEl.textContent = scoreA;
+  scoreBEl.textContent = scoreB;
+  takenAEl.textContent = takenA;
+  takenBEl.textContent = takenB;
+  shotsDisplay.textContent = shotsPerSide;
+  shotsDisplay2.textContent = shotsPerSide;
+  // show whose turn in status if not animating
+  if(!inAnimation && turn === 'player') statusEl.textContent = 'Your turn — aim & charge power.';
+  else if(!inAnimation && turn === 'ai') statusEl.textContent = 'Computer turn.';
+}
+
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function lerp(a,b,t){return a + (b-a)*t;}
+function aimLabelFrom(v){
+  if(v < 0.33) return 'Left';
+  if(v > 0.66) return 'Right';
+  return 'Center';
+}
+
+// aim strip click
+aimStrip.addEventListener('click', (e)=> {
+  const rect = aimStrip.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width;
+  aimX = clamp(x, 0, 1);
+  aimLabel.textContent = aimLabelFrom(aimX);
+});
+
+// keyboard aim and in-flight curve application
+window.addEventListener('keydown', (e) => {
+  if(e.key === 'ArrowLeft'){
+    if(ball && ball.inAir){
+      // apply left curve impulse while in air
+      ball.curveAcc = clamp((ball.curveAcc || 0) - 0.02, -0.16, 0.16);
+    } else {
+      aimX = clamp(aimX - 0.045, 0, 1);
+      aimLabel.textContent = aimLabelFrom(aimX);
     }
   }
-
-  if(keeper.dive==="left")keeper.x-=4;
-  else if(keeper.dive==="right")keeper.x+=4;
-
-  drawBall();
-  drawKeeper();
-  requestAnimationFrame(update);
-}
-
-function endShot(goal){
-  ball.inAir=false;inPlay=false;
-  if(turn==="player"){pShots++;}else{cShots++;}
-  checkGameEnd();
-  setTimeout(()=>{
-    resetBall();resetKeeper();
-    turn=(turn==="player"?"comp":"player");
-    turnInfo.textContent=turn==="player"?"Player":"Computer";
-    if(turn==="comp")setTimeout(compShot,1000);
-  },1000);
-}
-
-function compShot(){
-  inPlay=true;
-  keeper.dive=["left","center","right"][Math.floor(Math.random()*3)];
-  ball.vx=(Math.random()*2-1)*2;
-  ball.vy=-8;
-  ball.vz=6;
-  ball.inAir=true;
-}
-
-function checkGameEnd(){
-  if(pShots>=shotsEach&&cShots>=shotsEach){
-    if(playerScore>compScore)msg.textContent="🎉 Player wins!";
-    else if(playerScore<compScore)msg.textContent="💻 Computer wins!";
-    else msg.textContent="🤝 Draw! Sudden death coming...";
+  if(e.key === 'ArrowRight'){
+    if(ball && ball.inAir){
+      ball.curveAcc = clamp((ball.curveAcc || 0) + 0.02, -0.16, 0.16);
+    } else {
+      aimX = clamp(aimX + 0.045, 0, 1);
+      aimLabel.textContent = aimLabelFrom(aimX);
+    }
   }
+  if(e.code === 'Space'){
+    // start charge if player turn
+    if(turn === 'player' && !ball.inAir && !inAnimation){
+      startCharge();
+      e.preventDefault();
+    }
+  }
+});
+window.addEventListener('keyup', (e) => {
+  if(e.code === 'Space'){
+    if(charging){ releaseCharge(); }
+  }
+});
+
+// power charge logic (button & space)
+let chargeInterval = null;
+shootBtn.addEventListener('mousedown', (ev) => { ev.preventDefault(); if(turn === 'player' && !inAnimation) startCharge(); });
+shootBtn.addEventListener('touchstart', (ev) => { ev.preventDefault(); if(turn === 'player' && !inAnimation) startCharge(); }, {passive:false});
+document.addEventListener('mouseup', ()=> { if(charging) releaseCharge(); });
+document.addEventListener('touchend', ()=> { if(charging) releaseCharge(); });
+
+function startCharge(){
+  if(inAnimation || turn !== 'player') return;
+  charging = true; powerPct = 8; powerFill.style.width = powerPct + '%';
+  chargeInterval = setInterval(()=>{ powerPct = (powerPct + 1.6) % 100; powerFill.style.width = powerPct + '%'; }, 12);
+  statusEl.textContent = 'Charging power... release to shoot.';
+}
+function releaseCharge(){
+  if(!charging) return;
+  charging = false;
+  clearInterval(chargeInterval);
+  const powerFrac = clamp(0.25 + (powerPct/100) * 0.75, 0.25, 1.0); // 0.25..1.0
+  powerFill.style.width = '0%';
+  // fire shot with current aimX and curve slider value (preCurve)
+  preCurve = parseFloat(curveSlider.value);
+  startPlayerShotWith(powerFrac, aimX, preCurve);
 }
 
-document.getElementById("shootBtn").onmousedown=()=>{if(turn==="player"&&!inPlay){charging=true;}};
-document.getElementById("shootBtn").onmouseup=()=>{if(charging)shootPlayer();};
-
-window.addEventListener("keydown",e=>{if(e.code==="Space"&&turn==="player"&&!inPlay)charging=true;});
-window.addEventListener("keyup",e=>{if(e.code==="Space"&&charging)shootPlayer();});
-
-function shootPlayer(){
-  charging=false;inPlay=true;
-  let shotPower=8+power*0.1;
-  let aim=(Math.random()*2-1)*3;
-  ball.vx=aim;ball.vy=-shotPower;ball.vz=6;
-  ball.inAir=true;
-  keeper.dive=["left","center","right"][Math.floor(Math.random()*3)];
-  power=0;powerEl.style.width="0%";
+/* start shot helpers */
+function startPlayerShotWith(powerFrac, aimRel, curveVal){
+  // take current ball state at start, and assign velocities
+  playerShoot(powerFrac, aimRel, curveVal);
 }
 
-function powerLoop(){
-  if(charging){power=(power+2)%100;powerEl.style.width=power+"%";}
-  requestAnimationFrame(powerLoop);
+/* auto player for demo */
+function startAutoPlayerShot(){
+  // auto choose power & curve and call playerShoot
+  const p = 0.6 + Math.random()*0.35;
+  const c = (Math.random()-0.5)*0.6;
+  preCurve = c;
+  playerShoot(p, aimX, c);
 }
 
-update();powerLoop();
+/* UI controls */
+restartBtn.addEventListener('click', ()=>{ resetMatch(); resetBallState(); updateUI(); });
+difficultySel.addEventListener('change', ()=>{ difficulty = parseFloat(difficultySel.value); });
+shotsPerSideSel.addEventListener('change', ()=>{ shotsPerSide = parseInt(shotsPerSideSel.value,10); resetMatch(); resetBallState(); updateUI(); });
+toggleAutoBtn.addEventListener('click', ()=>{ autoPlayAI = !autoPlayAI; toggleAutoBtn.textContent = `Auto-play AI: ${autoPlayAI ? 'ON' : 'OFF'}`; });
+
+saveResultBtn.addEventListener('click', ()=> {
+  const date = new Date().toLocaleString();
+  const player = document.getElementById('teamAname').innerText.trim();
+  const opponent = document.getElementById('teamBname').innerText.trim();
+  saveHistoryEntry({ date, player, opponent, scoreA, scoreB });
+  statusEl.textContent = 'Match result saved to local history.';
+});
+
+/* ----------------------
+   When a shot is resolved we call this from onShotResolved
+   ---------------------- */
+function onShotResolvedWrapper(result){
+  onShotResolved(result);
+}
+
+/* ----------------------
+   Misc helpers & start loop
+   ---------------------- */
+function updateUI() {
+  scoreAEl.textContent = scoreA;
+  scoreBEl.textContent = scoreB;
+  takenAEl.textContent = takenA;
+  takenBEl.textContent = takenB;
+  shotsDisplay.textContent = shotsPerSide;
+  shotsDisplay2.textContent = shotsPerSide;
+}
+
+/* small lerp helper repeated earlier but okay */
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+function lerp(a,b,t){ return a + (b-a)*t; }
+
+/* ----------------------
+   Resolve shot wrapper (call this to finalize a shot)
+   ---------------------- */
+function resolveShot({goal=false, saved=false}){
+  // call onShotResolved
+  onShotResolved({goal, saved});
+}
+
+/* ----------------------
+   Start animate loop + initial state
+   ---------------------- */
+resetBallState();
+resetMatch();
+updateUI();
+requestAnimationFrame(animateFrame);
+
+/* ----------------------
+   Small safety: when page resumes after user gesture, allow audio
+   ---------------------- */
+window.addEventListener('click', ()=>{ ensureAudioCtx(); }, { once:true });
+
+/* Note:
+   - preCurve slider influences initial curve. During flight you can press left/right to nudge curve.
+   - tweak constants near top for speeds, gravity, and depth for desired feel.
+   - Replace logos by setting #teamAimg.src / #teamBimg.src (or edit HTML).
+*/
+
 </script>
 </body>
 </html>
