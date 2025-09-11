@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Penalty Shootout - Demo</title>
+<style>
+  :root{ --bg:#0b2a3a; --panel:#0f3b4b; --accent:#ffcc00; --muted:#9fb5c0; }
+  body{ margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial; background:linear-gradient(180deg,#06202a 0%, #0b2a3a 100%); color:#e8f6fb; display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px; }
+  .wrap{ width:960px; max-width:96vw; background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.05)); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.45); overflow:hidden; display:grid; grid-template-columns:1fr 360px; gap:0; }
+  canvas{ background:linear-gradient(#1a6b54,#1b8a66); display:block; width:100%; height:100%; }
+  .right{ padding:20px; background:var(--panel); min-width:300px; box-sizing:border-box; }
+  h1{ margin:0 0 8px 0; font-size:20px; color:var(--accent); }
+  .score{ display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+  .score .box{ background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:8px; text-align:center; min-width:86px; }
+  .score .num{ font-size:28px; font-weight:700; }
+  .controls{ margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
+  button{ background:var(--accent); color:#0b2a3a; border:none; padding:10px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
+  .info{ color:var(--muted); font-size:13px; margin-top:12px; line-height:1.3; }
+  .aimHint{ color:#cde; font-size:13px; margin-top:8px; }
+  footer.small{ font-size:12px; color:var(--muted); margin-top:12px; }
+  @media (max-width:900px){ .wrap{ grid-template-columns:1fr; } .right{ order:2 } }
+</style>
+</head>
+<body>
+<div class="wrap" role="application" aria-label="Penalty shootout game">
+  <div style="padding:16px;">
+    <canvas id="field" width="1280" height="720" style="border-radius:10px; display:block;"></canvas>
+  </div>
+
+  <div class="right" aria-hidden="false">
+    <h1>Penalty Shootout</h1>
+    <div class="score">
+      <div class="box">
+        <div style="font-size:12px;color:var(--muted)">Player</div>
+        <div id="playerScore" class="num">0</div>
+        <div style="font-size:12px;color:var(--muted)">Shots <span id="playerTaken">0</span>/5</div>
+      </div>
+      <div class="box">
+        <div style="font-size:12px;color:var(--muted)">Computer</div>
+        <div id="aiScore" class="num">0</div>
+        <div style="font-size:12px;color:var(--muted)">Shots <span id="aiTaken">0</span>/5</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="shootBtn">Shoot (Space)</button>
+      <button id="resetBtn">Restart</button>
+      <button id="autoPlayBtn">Auto-play AI</button>
+    </div>
+
+    <div class="aimHint">Aim with mouse/touch or left/right arrows. Click shoot to take the penalty.</div>
+
+    <div class="info" id="message">Round: Player kicks first.</div>
+
+    <footer class="small">Tip: I'll integrate this into your site — I can swap styles, add team logos, sounds, and persistent leaderboard.</footer>
+  </div>
+</div>
+
+<script>
+/* Penalty Shootout demo
+   Simple but robust: aim, shoot, AI goalkeeper with probability/dive.
+   Easily configurable: shotsPerSide variable, AI skill, sizes.
+*/
+
+const canvas = document.getElementById('field');
+const ctx = canvas.getContext('2d', { alpha:false });
+let W = canvas.width, H = canvas.height;
+
+function resizeCanvasToDisplay() {
+  // keep drawing resolution consistent for crispness
+  const styleW = canvas.clientWidth;
+  const styleH = canvas.clientHeight;
+  const scale = window.devicePixelRatio || 1;
+  canvas.width = Math.round(styleW * scale);
+  canvas.height = Math.round(styleH * scale);
+  W = canvas.width; H = canvas.height;
+}
+resizeCanvasToDisplay();
+window.addEventListener('resize', () => { resizeCanvasToDisplay(); draw(); });
+
+// Game config
+const shotsPerSide = 5;
+let playerScore = 0, aiScore = 0;
+let playerTaken = 0, aiTaken = 0;
+let messageEl = document.getElementById('message');
+let playerScoreEl = document.getElementById('playerScore');
+let aiScoreEl = document.getElementById('aiScore');
+let playerTakenEl = document.getElementById('playerTaken');
+let aiTakenEl = document.getElementById('aiTaken');
+let shootBtn = document.getElementById('shootBtn');
+let resetBtn = document.getElementById('resetBtn');
+let autoPlayBtn = document.getElementById('autoPlayBtn');
+
+let turn = 'player'; // 'player' or 'ai'
+let inAnimation = false;
+let aimAngle = 0; // -1 (left) .. +1 (right)
+let autoPlayAI = false;
+
+// Field / goal geometry (relative)
+const goal = {
+  x: 0.5, y: 0.15, width: 0.5, height: 0.12 // relative
+};
+const ballStart = { x: 0.5, y: 0.78 };
+const penaltySpot = { x: 0.5, y: 0.68 };
+
+function drawField() {
+  ctx.save();
+  ctx.clearRect(0,0,W,H);
+  // grass
+  ctx.fillStyle = '#1b6b55';
+  ctx.fillRect(0,0,W,H);
+
+  // penalty box
+  const fieldPadding = 40*(W/1280);
+  ctx.fillStyle = '#176b4e';
+  ctx.fillRect(fieldPadding, fieldPadding, W-2*fieldPadding, H-2*fieldPadding);
+
+  // centerlines / arcs - simple
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+  ctx.lineWidth = 2*(W/1280);
+  ctx.beginPath();
+  ctx.moveTo(W*0.5, fieldPadding);
+  ctx.lineTo(W*0.5, H-fieldPadding);
+  ctx.stroke();
+
+  // goal
+  const gx = W*(goal.x - goal.width/2);
+  const gy = H*(goal.y - goal.height/2);
+  const gw = W*goal.width;
+  const gh = H*goal.height;
+  ctx.save();
+  ctx.fillStyle = '#e8f6fb';
+  ctx.fillRect(gx, gy, gw, 6*(H/720)); // crossbar
+  ctx.fillRect(gx, gy, 6*(W/1280), gh); // left post
+  ctx.fillRect(gx+gw-6*(W/1280), gy, 6*(W/1280), gh); // right post
+  ctx.restore();
+
+  // penalty spot
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.arc(W*penaltySpot.x, H*penaltySpot.y, 4*(W/1280), 0, Math.PI*2);
+  ctx.fill();
+
+  // ball start
+  drawBall(ballStart.x, ballStart.y, false);
+
+  ctx.restore();
+}
+
+function drawBall(relX, relY, filled=true) {
+  const x = relX * W;
+  const y = relY * H;
+  const r = Math.max(9*(W/1280), 6);
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(x,y,r,0,Math.PI*2);
+  ctx.fillStyle = filled ? '#ffffff' : '#fff6';
+  ctx.fill();
+  ctx.strokeStyle = '#0003';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawGoalkeeper(xRel, diveProgress) {
+  const x = xRel * W;
+  const y = (goal.y + goal.height/2) * H;
+  const w = 40*(W/1280);
+  const h = 60*(H/720);
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.beginPath();
+  ctx.fillStyle = '#222';
+  ctx.fillRect(-w/2 + diveProgress*120*(W/1280), -h, w, h);
+  ctx.restore();
+}
+
+function drawAimIndicator() {
+  if (turn !== 'player' || inAnimation) return;
+  const cx = penaltySpot.x * W;
+  const cy = penaltySpot.y * H;
+  ctx.save();
+  ctx.globalAlpha = 0.9;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  const aimX = cx + aimAngle * 240*(W/1280);
+  const aimY = cy - 240*(H/720);
+  ctx.lineWidth = 3*(W/1280);
+  ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+  ctx.lineTo(aimX, aimY);
+  ctx.stroke();
+  // target marker
+  ctx.beginPath();
+  ctx.arc(aimX, aimY, 8*(W/1280), 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,204,0,0.95)';
+  ctx.fill();
+  ctx.restore();
+}
+
+function draw() {
+  drawField();
+  drawAimIndicator();
+  // draw keeper in neutral position
+  drawGoalkeeper(0.5, 0);
+}
+
+draw();
+
+// Input handlers: mouse/touch aim and keyboard left/right
+canvas.addEventListener('mousemove', (e)=>{
+  if (turn !== 'player' || inAnimation) return;
+  const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) / rect.width;
+  // map mx across goal width area (limit to -1..1)
+  const rel = (mx - 0.5) * 2; // -1..1
+  aimAngle = Math.max(-0.95, Math.min(0.95, rel));
+  draw();
+});
+canvas.addEventListener('touchmove', (e)=>{
+  if (turn !== 'player' || inAnimation) return;
+  const t = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  const mx = (t.clientX - rect.left) / rect.width;
+  aimAngle = Math.max(-0.95, Math.min(0.95, (mx - 0.5)*2));
+  draw();
+}, {passive:true});
+
+let keyLeft = false, keyRight = false;
+window.addEventListener('keydown', (e)=>{
+  if (e.key === 'ArrowLeft') { keyLeft = true; aimAngle = Math.max(-1, aimAngle - 0.15); draw(); }
+  if (e.key === 'ArrowRight') { keyRight = true; aimAngle = Math.min(1, aimAngle + 0.15); draw(); }
+  if (e.code === 'Space') { e.preventDefault(); handleShoot(); }
+});
+window.addEventListener('keyup', (e)=>{
+  if (e.key === 'ArrowLeft') keyLeft = false;
+  if (e.key === 'ArrowRight') keyRight = false;
+});
+
+// Shoot logic
+shootBtn.addEventListener('click', handleShoot);
+resetBtn.addEventListener('click', resetGame);
+autoPlayBtn.addEventListener('click', ()=>{ autoPlayAI = !autoPlayAI; autoPlayBtn.textContent = autoPlayAI ? 'Auto-play: ON' : 'Auto-play AI'; });
+
+function handleShoot() {
+  if (inAnimation) return;
+  if (turn !== 'player') return;
+  if (playerTaken >= shotsPerSide) return;
+  const shotAngle = aimAngle; // -1..1
+  animateShot(shotAngle, 'player');
+}
+
+function animateShot(shotAngle, kicker) {
+  inAnimation = true;
+  messageEl.textContent = 'Shot...';
+  // ball path from penaltySpot to a point inside goal area
+  const start = { x: penaltySpot.x * W, y: penaltySpot.y * H };
+  const target = {
+    x: (0.5 + shotAngle*0.4) * W,
+    y: (goal.y + goal.height/4) * H // aim high-ish
+  };
+  const totalFrames = 28;
+  let frame = 0;
+
+  // AI goalkeeper decision parameters
+  const aiSkill = 0.72; // 0..1 higher is better
+  const aiReaction = 8 + Math.random()*6; // frames to start dive
+  // decide target side: left/mid/right
+  const shotSide = shotAngle < -0.25 ? 'left' : (shotAngle > 0.25 ? 'right' : 'center');
+  // AI chooses dive side with some probability (skill)
+  let aiGuess = (Math.random() < aiSkill) ? shotSide : (Math.random()<0.5 ? (shotSide==='left' ? 'right' : 'left') : 'center');
+  // map aiGuess to relative x
+  const aiTargetX = (aiGuess === 'left') ? 0.28 : (aiGuess==='right' ? 0.72 : 0.5);
+
+  // whether keeper will reach intersection
+  let keeperWillSave = false;
+
+  function frameStep() {
+    frame++;
+    drawField();
+    // draw interpolated ball
+    const t = frame/totalFrames;
+    // simple ease-out
+    const ease = 1 - Math.pow(1-t, 2);
+    const bx = start.x + (target.x - start.x)*ease;
+    const by = start.y + (target.y - start.y)*ease;
+    drawBall(bx / W, by / H, true);
+
+    // goalkeeper diving logic - starts after aiReaction frames
+    let diveProgress = 0;
+    if (frame >= aiReaction) {
+      const diveT = (frame - aiReaction) / (totalFrames - aiReaction);
+      // dive progress positive (0..1), direction based on aiTargetX
+      const currentKeeperX = 0.5 + (aiTargetX - 0.5) * Math.min(1, diveT*1.5);
+      diveProgress = (currentKeeperX - 0.5) / 0.5; // -1..1
+      // check intercept: if keeper X close to ball X when ball near goal line
+      const distance = Math.abs(currentKeeperX*W - bx);
+      if (by <= (goal.y + goal.height/2)*H + 6 && distance < 48*(W/1280)) {
+        keeperWillSave = true;
+      }
+      drawGoalkeeper(currentKeeperX, diveProgress);
+    } else {
+      drawGoalkeeper(0.5, 0);
+    }
+
+    if (frame < totalFrames) {
+      requestAnimationFrame(frameStep);
+    } else {
+      // finalize result
+      const isGoal = !keeperWillSave && (target.x > (goal.x - goal.width/2)*W) && (target.x < (goal.x + goal.width/2)*W);
+      if (kicker === 'player') {
+        playerTaken++;
+        playerTakenEl.textContent = playerTaken;
+        if (isGoal) { playerScore++; playerScoreEl.textContent = playerScore; messageEl.textContent = 'GOAL!'; }
+        else { messageEl.textContent = keeperWillSave ? 'Saved by keeper!' : 'Missed!'; }
+        // next: AI takes turn unless finished
+        setTimeout(()=>{ inAnimation=false; evaluateAfterKick(); }, 900);
+      } else {
+        aiTaken++;
+        aiTakenEl.textContent = aiTaken;
+        if (isGoal) { aiScore++; aiScoreEl.textContent = aiScore; messageEl.textContent = 'Computer scored.'; }
+        else { messageEl.textContent = keeperWillSave ? 'Saved!' : 'Computer missed.'; }
+        setTimeout(()=>{ inAnimation=false; evaluateAfterKick(); }, 900);
+      }
+    }
+  }
+  requestAnimationFrame(frameStep);
+}
+
+function evaluateAfterKick() {
+  // check if game finished or switch turns
+  if (playerTaken >= shotsPerSide && aiTaken >= shotsPerSide) {
+    // final
+    messageEl.textContent = (playerScore > aiScore) ? 'You win!' : (playerScore < aiScore ? 'Computer wins' : 'Draw — sudden death not implemented');
+    turn = 'done';
+    return;
+  }
+
+  if (turn === 'player') {
+    // After player shot, let AI take its shot
+    turn = 'ai';
+    if (autoPlayAI) setTimeout(aiTakeShot, 800);
+    else setTimeout(()=>{ messageEl.textContent = "Computer's turn."; aiTakeShot(); }, 800);
+  } else if (turn === 'ai') {
+    turn = 'player';
+    messageEl.textContent = 'Your turn; aim and shoot.';
+    if (autoPlayAI && playerTaken < shotsPerSide) {
+      // give it a small delay then auto-shoot for player (useful for demos)
+      setTimeout(()=>{ handleShoot(); }, 900);
+    }
+  }
+}
+
+function aiTakeShot() {
+  if (aiTaken >= shotsPerSide) {
+    // if AI already finished, go back to player
+    turn = 'player';
+    messageEl.textContent = 'Your turn.';
+    return;
+  }
+  // AI picks an angle based on strategy
+  // difficulty: sometimes aim center, sometimes corners
+  const difficulty = 0.7; // higher -> more corner attempts
+  const r = Math.random();
+  let angle;
+  if (r < difficulty*0.6) angle = (Math.random() < 0.5 ? -0.8 : 0.8);
+  else angle = (Math.random()*1.6 - 0.8); // random -0.8..0.8
+  messageEl.textContent = 'Computer is taking a shot...';
+  setTimeout(()=>{ animateShot(angle, 'ai'); }, 600);
+}
+
+function resetGame() {
+  playerScore = 0; aiScore = 0;
+  playerTaken = 0; aiTaken = 0;
+  playerScoreEl.textContent = '0'; aiScoreEl.textContent = '0';
+  playerTakenEl.textContent = '0'; aiTakenEl.textContent = '0';
+  turn = 'player';
+  inAnimation = false;
+  messageEl.textContent = 'Round: Player kicks first.';
+  aimAngle = 0;
+  draw();
+}
+
+// initial draw
+draw();
+
+/* Integration notes for your site:
+   - Place this file in your site, or move JS into your existing game script.
+   - To use custom team logos: add <img> elements in the right panel and set src to your assets.
+   - To persist leaderboard: use localStorage or a server endpoint.
+   - I can adapt the visuals, add sound effects, add sudden-death, multiplayer, or mobile-specific controls.
+*/
+</script>
+</body>
+</html>
