@@ -1,23 +1,24 @@
-// Sample ISL standings data
+// Fresh ISL standings (all stats reset to 0)
 const standings = [
-    { position: 1, team: "Benglaru", played: 6, wins: 5, draws: 1, losses: 0, gd: 10, points: 16 },
-    { position: 2, team: "Jamshedpur", played: 6, wins: 4, draws: 0, losses: 2, gd: -1, points: 12 },
-    { position: 3, team: "Mohun Bagan", played: 5, wins: 3, draws: 1, losses: 1, gd: 3, points: 10 },
-    { position: 4, team: "Punjab FC", played: 4, wins: 3, draws: 0, losses: 1, gd: 3, points: 9 },
-    { position: 5, team: "NorthEast United", played: 6, wins: 2, draws: 2, losses: 2, gd: 4, points: 8 },
-    { position: 6, team: "Chennayin", played: 5, wins: 2, draws: 2, losses: 1, gd: 1, points: 8 },
-    { position: 7, team: "Odisha FC", played: 6, wins: 2, draws: 2, losses: 2, gd: 0, points: 8 },
-    { position: 8, team: "Kerala Blasters FC", played: 6, wins: 2, draws: 2, losses: 2, gd: -1, points: 8 },
-    { position: 9, team: "Mumabi City", played: 5, wins: 1, draws: 3, losses: 1, gd: 0, points: 6 },
-    { position: 10, team: "Goa", played: 6, wins: 1, draws: 3, losses: 2, gd: -1, points: 6 },
-    { position: 11, team: "Hyderabad", played: 5, wins: 1, draws: 1, losses: 3, gd: -2, points: 4},
-    { position: 12, team: "Mohammeda sc", played: 6, wins: 1, draws: 1, losses: 4, gd: -8, points: 4},
-    { position: 13, team: "East Bengal", played: 6, wins: 0, draws: 0, losses: 6, gd: -8, points: 0},
+    { position: 1, team: "Bengaluru FC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 2, team: "Jamshedpur FC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 3, team: "Mohun Bagan SG", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 4, team: "Punjab FC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 5, team: "NorthEast United", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 6, team: "Chennaiyin FC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 7, team: "Odisha FC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 8, team: "Kerala Blasters FC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 9, team: "Mumbai City FC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 10, team: "FC Goa", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 11, team: "Hyderabad FC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 12, team: "Mohammedan SC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 },
+    { position: 13, team: "East Bengal FC", played: 0, wins: 0, draws: 0, losses: 0, gd: 0, points: 0 }
 ];
 
 // Function to display standings in the table
 function displayStandings() {
     const standingsTable = document.getElementById("isl-standings");
+
     standings.forEach(team => {
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -28,11 +29,20 @@ function displayStandings() {
             <td>${team.draws}</td>
             <td>${team.losses}</td>
             <td>${team.gd}</td>
-            <td>${team.points}</td>
+            <td><strong>${team.points}</strong></td>
         `;
         standingsTable.appendChild(row);
     });
+
+    // Add message row at the bottom
+    const messageRow = document.createElement("tr");
+    messageRow.innerHTML = `
+        <td colspan="8" style="text-align:center; font-weight:bold; color:#c62828; background:#ffe5e5;">
+            The ISL will start when it starts
+        </td>
+    `;
+    standingsTable.appendChild(messageRow);
 }
 
-// Load standings when the DOM is ready
+// Load standings when DOM is ready
 document.addEventListener("DOMContentLoaded", displayStandings);
