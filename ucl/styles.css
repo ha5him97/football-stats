@@ -1,3 +1,4 @@
+/* General Body */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -6,38 +7,63 @@ body {
     padding: 0;
 }
 
+/* Headings */
 h1 {
-    color: #222;
-    margin-top: 30px;
+    color: #fff;
+    margin-top: 20px;
 }
 
 h2 {
     color: #003366;
-    margin-top: 40px;
+    margin-top: 60px;
 }
 
 h3 {
     color: #0055aa;
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
+/* Buttons */
+.button {
+    background-color: #ff0000; /* Primary color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Button hover effect */
+.button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Overall & Group Tables */
 table {
     width: 90%;
-    margin: 20px auto;
+    margin: 20px auto 50px auto;
     border-collapse: collapse;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+/* Table Headers & Cells */
 th, td {
     padding: 10px;
     border: 1px solid #ddd;
-    font-size: 14px;
+    text-align: center;
 }
 
 th {
-    background-color: #003366;
+    background-color: #4CAF50;
     color: white;
+    font-size: 1em;
 }
 
 tr:nth-child(even) {
@@ -45,36 +71,68 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-    background-color: #f1f1f1;
+    background-color: #d1e7dd;
 }
 
-.button {
-    display: inline-block;
-    background-color: #ff0000;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 16px;
-    margin: 20px 0;
-    transition: 0.3s;
+/* Group Sections */
+.groups {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-/* Group table styling */
-.groups .group {
+.group {
     margin-bottom: 50px;
 }
 
-/* Footer */
+/* Footer Styling */
 footer {
-    background-color: #111;
+    background-color: #333;
     color: #fff;
-    padding: 20px 0;
-    margin-top: 50px;
-    font-size: 14px;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.footer-content h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.footer-content p {
+    font-size: 0.9em;
+    margin: 10px 0 20px;
+    color: #aaa;
+}
+
+.socials {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 0;
+}
+
+.socials li {
+    display: inline-block;
+}
+
+.socials a {
+    color: #fff;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+.socials a:hover {
+    color: #4d94ff;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 0.8em;
+    color: #aaa;
+}
+
+.footer-bottom p {
+    margin: 0;
 }
