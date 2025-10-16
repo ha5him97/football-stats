@@ -1,83 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEFA Champions League Table</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link id="favicon" rel="icon" type="image/png" href="../logo/logo.jpg">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            color: #003366;
-        }
-        .message {
-            margin-top: 40px;
-            font-size: 1.2rem;
-            color: #555;
-        }
-        .button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #003366;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .button:hover {
-            background: #0055aa;
-        }
-        footer {
-            margin-top: 100px;
-            background: #111;
-            color: white;
-            padding: 20px;
-        }
-        .footer-content h3 {
-            margin: 0;
-        }
-        .socials {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
-            padding: 0;
-        }
-        .socials a {
-            color: white;
-            font-size: 1.2rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UEFA Champions League 2024/25 Standings</title>
+  <link rel="stylesheet" href="../assets/css/ucl.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link id="favicon" rel="icon" type="image/png" href="../logo/logo.jpg">
 </head>
 <body>
-    <h1>UEFA Champions League Table</h1>
-    <a href="../index.html" class="button">BACK TO HOME</a>
-    
-    <div class="message">
-        <p>The UEFA Champions League 2024/25 has not started yet. Stay tuned for updates!</p>
-    </div>
 
-    <footer>
-        <div class="footer-content">
-            <h3>haxhim</h3>
-            <p>Your one-stop hub for football stats, analysis, and gaming fun.</p>
-            <ul class="socials">
-                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-            </ul>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 haxhim. All Rights Reserved | Designed by You</p>
-        </div>
-    </footer>
+  <h1>🏆 UEFA Champions League 2024/25 Standings</h1>
+
+  <a href="../index.html" class="button">BACK TO HOME</a>
+
+  <div class="ucl-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Pos</th>
+          <th>Team</th>
+          <th>Played</th>
+          <th>Won</th>
+          <th>Draw</th>
+          <th>Lost</th>
+          <th>GF</th>
+          <th>GA</th>
+          <th>GD</th>
+          <th>Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Top 10 teams (current standings) -->
+        <tr><td>1</td><td>Bayern Munich</td><td>2</td><td>2</td><td>0</td><td>0</td><td>8</td><td>2</td><td>+6</td><td>6</td></tr>
+        <tr><td>2</td><td>Real Madrid</td><td>2</td><td>2</td><td>0</td><td>0</td><td>7</td><td>1</td><td>+6</td><td>6</td></tr>
+        <tr><td>3</td><td>Paris Saint-Germain</td><td>2</td><td>2</td><td>0</td><td>0</td><td>6</td><td>1</td><td>+5</td><td>6</td></tr>
+        <tr><td>4</td><td>Inter Milan</td><td>2</td><td>2</td><td>0</td><td>0</td><td>5</td><td>0</td><td>+5</td><td>6</td></tr>
+        <tr><td>5</td><td>Arsenal</td><td>2</td><td>2</td><td>0</td><td>0</td><td>4</td><td>0</td><td>+4</td><td>6</td></tr>
+        <tr><td>6</td><td>Qarabag FK</td><td>2</td><td>2</td><td>0</td><td>0</td><td>5</td><td>2</td><td>+3</td><td>6</td></tr>
+        <tr><td>7</td><td>Borussia Dortmund</td><td>2</td><td>1</td><td>1</td><td>0</td><td>8</td><td>5</td><td>+3</td><td>4</td></tr>
+        <tr><td>8</td><td>Manchester City</td><td>2</td><td>1</td><td>1</td><td>0</td><td>4</td><td>2</td><td>+2</td><td>4</td></tr>
+        <tr><td>9</td><td>Tottenham Hotspur</td><td>2</td><td>1</td><td>1</td><td>0</td><td>3</td><td>2</td><td>+1</td><td>4</td></tr>
+        <tr><td>10</td><td>Atletico Madrid</td><td>2</td><td>1</td><td>0</td><td>1</td><td>7</td><td>4</td><td>+3</td><td>3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <h3>haxhim</h3>
+      <p>Your one-stop hub for football stats, analysis, and gaming fun.</p>
+      <ul class="socials">
+        <li><a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a></li>
+        <li><a href="https://x.com/"><i class="fab fa-twitter"></i></a></li>
+        <li><a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a></li>
+        <li><a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 haxhim. All Rights Reserved | Designed by You</p>
+    </div>
+  </footer>
+
 </body>
 </html>
