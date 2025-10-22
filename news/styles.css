@@ -1,150 +1,209 @@
-/* General Styles */
+/* ---------- Base Styles ---------- */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4; /* Light gray background */
-    background: linear-gradient(to right, #ff6e6e, #8f70ff);
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background 0.5s, color 0.5s;
 }
 
+/* Containers */
 .container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
+  width: 85%;
+  margin: auto;
+  overflow: hidden;
 }
 
-/* Header Styles */
+/* ---------- Header ---------- */
 header {
-    background: #333; /* Dark background for header */
-    color: #fff; /* White text */
-    padding: 20px 0;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  text-align: center;
+  padding: 25px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
 header h1 {
-    margin: 0;
-    text-align: center;
+  font-size: 2.3em;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+header p {
+  font-size: 1em;
+  color: #ccc;
 }
 
 nav ul {
-    padding: 0;
-    list-style: none;
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
 }
 
 nav ul li {
-    display: inline; /* Horizontal navigation */
-    margin-right: 20px;
+  display: inline-block;
+  margin: 0 15px;
 }
 
 nav a {
-    color: #fff;
-    text-decoration: none;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
-/* Main Content Styles */
+nav a:hover {
+  color: #4d94ff;
+}
+
+/* Theme Toggle Button */
+.theme-btn {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  background: #4d94ff;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.theme-btn:hover {
+  background: #366dff;
+  transform: scale(1.05);
+}
+
+/* ---------- Main ---------- */
 main {
-    background: #fff; /* White background for content */
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 10px;
+  padding: 25px;
+  margin-top: 30px;
+  transition: 0.5s;
 }
 
-h2 {
-    text-align: center;
-    color: #333; /* Dark text color */
+main h2 {
+  text-align: center;
+  font-size: 1.8em;
+  text-shadow: 0 0 10px #ffea00;
+  margin-bottom: 20px;
 }
 
-/* Article Styles */
-article {
-    border-bottom: 1px solid #ccc; /* Light gray separator */
-    padding: 15px 0;
+/* Article Cards */
+.news-card {
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: 0.3s;
 }
 
-article h3 {
-    color: #007BFF; /* Bootstrap primary color for headings */
-    margin: 0;
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #4d94ff;
 }
 
-article p {
-    color: #666; /* Gray text color */
+.news-card h3 {
+  font-size: 1.3em;
+  margin-bottom: 10px;
 }
 
-/* Footer Styles */
+.news-card p {
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+/* ---------- Footer ---------- */
 footer {
-    background: #333; /* Dark background for footer */
-    color: #fff; /* White text */
-    text-align: center;
-    padding: 10px 0;
-    position: relative; /* Ensure footer stays at the bottom */
+  padding: 40px 0 20px;
+  text-align: center;
+  transition: 0.5s;
 }
 
-footer p {
-    margin: 0;
+.footer-content h3 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
 }
 
-/* Button Styles */
-button {
-    padding: 10px 20px;
-    background-color: #007BFF; /* Blue button */
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    margin: 5px;
+.footer-content p {
+  font-size: 0.95em;
+  margin-bottom: 20px;
 }
 
-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+.socials {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
 }
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 30px 0;
-    text-align: center;
-  }
-  
-  .footer-content h3 {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  
-  .footer-content p {
-    font-size: 0.9em;
-    margin: 10px 0 20px;
-    color: #aaa;
-  }
-  
-  .socials {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 0;
-  }
-  
-  .socials li {
-    display: inline-block;
-  }
-  
-  .socials a {
-    color: #fff;
-    font-size: 1.2em;
-    transition: color 0.3s;
-  }
-  
-  .socials a:hover {
-    color: #4d94ff; /* Custom color for hover effect */
-  }
-  
-  .footer-bottom {
-    margin-top: 20px;
-    font-size: 0.8em;
-    color: #aaa;
-  }
-  
-  .footer-bottom p {
-    margin: 0;
-  }
-  
+
+.socials a {
+  font-size: 1.3em;
+  transition: 0.3s;
+}
+
+.socials a:hover {
+  color: #4d94ff;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+
+/* ---------- DARK MODE ---------- */
+.dark-mode {
+  background: linear-gradient(135deg, #1e1e2f, #2b2b63, #512da8);
+  color: #fff;
+}
+
+.dark-mode main {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.dark-mode .news-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ccc;
+}
+
+.dark-mode footer {
+  background: #111;
+  color: #fff;
+}
+
+/* ---------- LIGHT MODE ---------- */
+.light-mode {
+  background: #f4f4f4;
+  color: #333;
+}
+
+.light-mode header {
+  background: #007bff;
+  color: #fff;
+}
+
+.light-mode nav a {
+  color: #fff;
+}
+
+.light-mode main {
+  background: #fff;
+  color: #333;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .news-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+.light-mode footer {
+  background: #007bff;
+  color: #fff;
+}
