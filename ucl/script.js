@@ -3,13 +3,26 @@ let originalTableData = [];
 
 // Initialize the table data on page load
 document.addEventListener('DOMContentLoaded', function() {
+    saveOriginalOrder();
+    addSortListeners();
+    addHoverEffects();
+});
+
+// Save the original order of rows
+function saveOriginalOrder() {
     const table = document.getElementById('ucl-table');
     const rows = Array.from(table.querySelectorAll('tbody tr'));
-    
-    // Store original data
-    originalTableData = rows.map(row => row.outerHTML);
-    
-    // Add click event to sort by column headers
+    originalTableData = rows.map(row => ({
+        html: row.outerHTML,
+        points: parseInt(row.cells[9].textContent) || 0,
+        gd: parseFloat(row.cells[8].textContent) || 0,
+        wins: parseInt(row.cells[3].textContent) || 0,
+        team: row.cells[1].textContent
+    }));
+}
+
+// Add click listeners to table headers
+function addSortListeners() {
     const headers = document.querySelectorAll('#ucl-table th');
     headers.forEach((header, index) => {
         header.style.cursor = 'pointer';
@@ -17,46 +30,45 @@ document.addEventListener('DOMContentLoaded', function() {
             sortByColumn(index);
         });
     });
-});
+}
 
-// Function to sort by column index
+// Sort by column index
 function sortByColumn(columnIndex) {
     const table = document.getElementById('ucl-table');
     const tbody = table.querySelector('tbody');
     const rows = Array.from(tbody.querySelectorAll('tr'));
     
     // Determine sort type based on column
-    const isNumeric = columnIndex !== 1; // Column 1 is team names (not numeric)
-    
     rows.sort((rowA, rowB) => {
-        const cellA = rowA.cells[columnIndex].textContent;
-        const cellB = rowB.cells[columnIndex].textContent;
+        const cellA = rowA.cells[columnIndex].textContent.trim();
+        const cellB = rowB.cells[columnIndex].textContent.trim();
         
-        if (isNumeric) {
-            // Handle GD column with +/-
-            if (columnIndex === 8) {
-                const numA = parseFloat(cellA);
-                const numB = parseFloat(cellB);
-                return numB - numA; // Descending for GD
-            }
-            // Handle other numeric columns
+        // Column 0: Position (numeric)
+        // Column 1: Team name (string)
+        // Columns 2-7, 9: Numeric stats
+        // Column 8: GD (numeric with +-)
+        
+        if (columnIndex === 1) { // Team name
+            return cellA.localeCompare(cellB);
+        } else if (columnIndex === 8) { // GD column
+            const numA = parseFloat(cellA) || 0;
+            const numB = parseFloat(cellB) || 0;
+            return numB - numA; // Descending (higher GD first)
+        } else { // All other numeric columns
             const numA = parseInt(cellA) || 0;
             const numB = parseInt(cellB) || 0;
-            return numB - numA; // Descending for most columns
-        } else {
-            // Alphabetical for team names
-            return cellA.localeCompare(cellB);
+            return numB - numA; // Descending (higher values first)
         }
     });
     
-    // Reorder rows
+    // Clear and re-add sorted rows
+    tbody.innerHTML = '';
     rows.forEach(row => tbody.appendChild(row));
     
-    // Update position numbers
     updatePositions();
 }
 
-// Sort functions for buttons
+// Sort by Points (P column - index 9)
 function sortTable(sortType) {
     const table = document.getElementById('ucl-table');
     const tbody = table.querySelector('tbody');
@@ -64,25 +76,45 @@ function sortTable(sortType) {
     
     rows.sort((rowA, rowB) => {
         if (sortType === 'points') {
-            const pointsA = parseInt(rowA.cells[9].textContent);
-            const pointsB = parseInt(rowB.cells[9].textContent);
-            return pointsB - pointsA;
-        } else if (sortType === 'gd') {
-            const gdA = parseFloat(rowA.cells[8].textContent);
-            const gdB = parseFloat(rowB.cells[8].textContent);
+            const pointsA = parseInt(rowA.cells[9].textContent) || 0;
+            const pointsB = parseInt(rowB.cells[9].textContent) || 0;
+            if (pointsB !== pointsA) {
+                return pointsB - pointsA; // Primary sort by points
+            }
+            // Tiebreaker: GD
+            const gdA = parseFloat(rowA.cells[8].textContent) || 0;
+            const gdB = parseFloat(rowB.cells[8].textContent) || 0;
             return gdB - gdA;
+            
+        } else if (sortType === 'gd') {
+            const gdA = parseFloat(rowA.cells[8].textContent) || 0;
+            const gdB = parseFloat(rowB.cells[8].textContent) || 0;
+            if (gdB !== gdA) {
+                return gdB - gdA; // Primary sort by GD
+            }
+            // Tiebreaker: Points
+            const pointsA = parseInt(rowA.cells[9].textContent) || 0;
+            const pointsB = parseInt(rowB.cells[9].textContent) || 0;
+            return pointsB - pointsA;
+            
         } else if (sortType === 'wins') {
-            const winsA = parseInt(rowA.cells[3].textContent);
-            const winsB = parseInt(rowB.cells[3].textContent);
-            return winsB - winsA;
+            const winsA = parseInt(rowA.cells[3].textContent) || 0;
+            const winsB = parseInt(rowB.cells[3].textContent) || 0;
+            if (winsB !== winsA) {
+                return winsB - winsA; // Primary sort by wins
+            }
+            // Tiebreaker: Points
+            const pointsA = parseInt(rowA.cells[9].textContent) || 0;
+            const pointsB = parseInt(rowB.cells[9].textContent) || 0;
+            return pointsB - pointsA;
         }
         return 0;
     });
     
-    // Reorder rows
+    // Clear and re-add sorted rows
+    tbody.innerHTML = '';
     rows.forEach(row => tbody.appendChild(row));
     
-    // Update position numbers
     updatePositions();
 }
 
@@ -92,17 +124,14 @@ function resetSort() {
     const tbody = table.querySelector('tbody');
     
     // Clear current rows
-    while (tbody.firstChild) {
-        tbody.removeChild(tbody.firstChild);
-    }
+    tbody.innerHTML = '';
     
-    // Add original rows
-    originalTableData.forEach(rowHtml => {
-        tbody.innerHTML += rowHtml;
+    // Add original rows in order
+    originalTableData.forEach(rowData => {
+        tbody.innerHTML += rowData.html;
     });
     
-    // Update position numbers (should be 1-36 in original order)
-    updatePositions();
+    // No need to update positions as original HTML already has them
 }
 
 // Update position numbers in first column
@@ -115,7 +144,7 @@ function updatePositions() {
     });
 }
 
-// Add hover effect for table rows
+// Add hover effects for table rows
 function addHoverEffects() {
     const rows = document.querySelectorAll('#ucl-table tbody tr');
     
@@ -123,6 +152,7 @@ function addHoverEffects() {
         row.addEventListener('mouseenter', function() {
             this.style.transform = 'scale(1.002)';
             this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+            this.style.transition = 'all 0.2s ease';
         });
         
         row.addEventListener('mouseleave', function() {
@@ -132,10 +162,7 @@ function addHoverEffects() {
     });
 }
 
-// Initialize hover effects when page loads
-document.addEventListener('DOMContentLoaded', addHoverEffects);
-
-// Search functionality (optional enhancement)
+// Optional: Add search functionality
 function addSearchFunctionality() {
     const searchContainer = document.querySelector('.table-header');
     
@@ -145,20 +172,23 @@ function addSearchFunctionality() {
         searchDiv.className = 'search-container';
         searchDiv.innerHTML = `
             <input type="text" class="search-input" placeholder="Search teams..." 
-                   style="padding: 10px; border-radius: 20px; border: 2px solid #001489; width: 250px;">
+                   style="padding: 10px 15px; border-radius: 25px; border: 2px solid #001489; 
+                          width: 250px; font-size: 1rem; margin-top: 10px;">
         `;
         searchContainer.appendChild(searchDiv);
         
         // Add search event listener
         const searchInput = searchDiv.querySelector('.search-input');
         searchInput.addEventListener('keyup', function() {
-            const searchTerm = this.value.toLowerCase();
+            const searchTerm = this.value.toLowerCase().trim();
             const rows = document.querySelectorAll('#ucl-table tbody tr');
+            let visibleCount = 0;
             
             rows.forEach(row => {
                 const teamName = row.cells[1].textContent.toLowerCase();
-                if (teamName.includes(searchTerm)) {
+                if (teamName.includes(searchTerm) || searchTerm === '') {
                     row.style.display = '';
+                    visibleCount++;
                 } else {
                     row.style.display = 'none';
                 }
@@ -166,6 +196,9 @@ function addSearchFunctionality() {
             
             // Update positions based on visible rows
             updateVisiblePositions();
+            
+            // Show message if no results
+            showNoResultsMessage(visibleCount, searchTerm);
         });
     }
 }
@@ -184,5 +217,61 @@ function updateVisiblePositions() {
     });
 }
 
-// Add search button if wanted (uncomment to add)
+// Show message when no results found
+function showNoResultsMessage(visibleCount, searchTerm) {
+    // Remove any existing message
+    const existingMsg = document.querySelector('.no-results');
+    if (existingMsg) {
+        existingMsg.remove();
+    }
+    
+    // If no results and search term isn't empty
+    if (visibleCount === 0 && searchTerm !== '') {
+        const tableContainer = document.querySelector('.table-container');
+        const message = document.createElement('div');
+        message.className = 'no-results';
+        message.innerHTML = `<p style="text-align: center; padding: 20px; color: #666; font-style: italic;">
+            No teams found matching "${searchTerm}"
+        </p>`;
+        tableContainer.appendChild(message);
+    }
+}
+
+// Optional: Add this CSS for the search input
+const searchStyles = `
+.search-container {
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.search-input {
+    padding: 12px 20px !important;
+    border-radius: 25px !important;
+    border: 2px solid #001489 !important;
+    width: 300px !important;
+    font-size: 1rem !important;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.search-input:focus {
+    border-color: #ffcc00 !important;
+    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2) !important;
+}
+
+.no-results {
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px;
+}
+`;
+
+// Add the styles to the page
+const styleSheet = document.createElement("style");
+styleSheet.textContent = searchStyles;
+document.head.appendChild(styleSheet);
+
+// Uncomment the line below to add search functionality automatically
 // document.addEventListener('DOMContentLoaded', addSearchFunctionality);
