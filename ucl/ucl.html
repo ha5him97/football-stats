@@ -4,77 +4,100 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UEFA Champions League 2024/25 Standings</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" type="image/png" href="logo/logo.jpg">
 </head>
 <body>
 
-<h1>🏆 UEFA Champions League 2024/25 Standings</h1>
-<a href="index.html" class="button">BACK TO HOME</a>
+<header>
+  <h1>🏆 UEFA Champions League 2024/25 Standings</h1>
+  <a href="index.html" class="button">← BACK TO HOME</a>
+</header>
 
-<!-- Overall Leaderboard -->
-<section class="overall-table">
-  <h2>Overall Leaderboard</h2>
- <table>
-  <thead>
-    <tr>
-      <th>Pos</th>
-      <th>Club</th>
-      <th>GP</th>
-      <th>W</th>
-      <th>D</th>
-      <th>L</th>
-      <th>F</th>
-      <th>A</th>
-      <th>GD</th>
-      <th>P</th>
-    </tr>
-  </thead>
-  <tbody>
-
-    <tr><td>1</td><td>Bayern Munich</td><td>4</td><td>4</td><td>0</td><td>0</td><td>14</td><td>3</td><td>+11</td><td>12</td></tr>
-    <tr><td>2</td><td>Arsenal</td><td>4</td><td>4</td><td>0</td><td>0</td><td>11</td><td>0</td><td>+11</td><td>12</td></tr>
-    <tr><td>3</td><td>Internazionale</td><td>4</td><td>4</td><td>0</td><td>0</td><td>11</td><td>1</td><td>+10</td><td>12</td></tr>
-    <tr><td>4</td><td>Manchester City</td><td>4</td><td>3</td><td>1</td><td>0</td><td>10</td><td>3</td><td>+7</td><td>10</td></tr>
-    <tr><td>5</td><td>Paris Saint-Germain</td><td>4</td><td>3</td><td>0</td><td>1</td><td>14</td><td>5</td><td>+9</td><td>9</td></tr>
-    <tr><td>6</td><td>Newcastle United</td><td>4</td><td>3</td><td>0</td><td>1</td><td>10</td><td>2</td><td>+8</td><td>9</td></tr>
-    <tr><td>7</td><td>Real Madrid</td><td>4</td><td>3</td><td>0</td><td>1</td><td>8</td><td>2</td><td>+6</td><td>9</td></tr>
-    <tr><td>8</td><td>Liverpool</td><td>4</td><td>3</td><td>0</td><td>1</td><td>9</td><td>4</td><td>+5</td><td>9</td></tr>
-    <tr><td>9</td><td>Galatasaray</td><td>4</td><td>3</td><td>0</td><td>1</td><td>8</td><td>6</td><td>+2</td><td>9</td></tr>
-    <tr><td>10</td><td>Tottenham Hotspur</td><td>4</td><td>2</td><td>2</td><td>0</td><td>7</td><td>2</td><td>+5</td><td>8</td></tr>
-    <tr><td>11</td><td>Barcelona</td><td>4</td><td>2</td><td>1</td><td>1</td><td>12</td><td>7</td><td>+5</td><td>7</td></tr>
-    <tr><td>12</td><td>Chelsea</td><td>4</td><td>2</td><td>1</td><td>1</td><td>9</td><td>6</td><td>+3</td><td>7</td></tr>
-    <tr><td>13</td><td>Sporting CP</td><td>4</td><td>2</td><td>1</td><td>1</td><td>8</td><td>5</td><td>+3</td><td>7</td></tr>
-    <tr><td>14</td><td>Borussia Dortmund</td><td>4</td><td>2</td><td>1</td><td>1</td><td>13</td><td>11</td><td>+2</td><td>7</td></tr>
-    <tr><td>15</td><td>FK Qarabag</td><td>4</td><td>2</td><td>1</td><td>1</td><td>8</td><td>7</td><td>+1</td><td>7</td></tr>
-    <tr><td>16</td><td>Atalanta</td><td>4</td><td>2</td><td>1</td><td>1</td><td>3</td><td>5</td><td>-2</td><td>7</td></tr>
-    <tr><td>17</td><td>Atlético Madrid</td><td>4</td><td>2</td><td>0</td><td>2</td><td>10</td><td>9</td><td>+1</td><td>6</td></tr>
-    <tr><td>18</td><td>PSV Eindhoven</td><td>4</td><td>1</td><td>2</td><td>1</td><td>9</td><td>7</td><td>+2</td><td>5</td></tr>
-    <tr><td>19</td><td>AS Monaco</td><td>4</td><td>1</td><td>2</td><td>1</td><td>4</td><td>6</td><td>-2</td><td>5</td></tr>
-    <tr><td>20</td><td>Pafos</td><td>4</td><td>1</td><td>2</td><td>1</td><td>2</td><td>5</td><td>-3</td><td>5</td></tr>
-    <tr><td>21</td><td>Bayer Leverkusen</td><td>4</td><td>1</td><td>2</td><td>1</td><td>6</td><td>10</td><td>-4</td><td>5</td></tr>
-    <tr><td>22</td><td>Club Brugge</td><td>4</td><td>1</td><td>1</td><td>2</td><td>8</td><td>10</td><td>-2</td><td>4</td></tr>
-    <tr><td>23</td><td>Eintracht Frankfurt</td><td>4</td><td>1</td><td>1</td><td>2</td><td>7</td><td>11</td><td>-4</td><td>4</td></tr>
-    <tr><td>24</td><td>Napoli</td><td>4</td><td>1</td><td>1</td><td>2</td><td>4</td><td>9</td><td>-5</td><td>4</td></tr>
-    <tr><td>25</td><td>Marseille</td><td>4</td><td>1</td><td>0</td><td>3</td><td>6</td><td>5</td><td>+1</td><td>3</td></tr>
-    <tr><td>26</td><td>Juventus</td><td>4</td><td>0</td><td>3</td><td>1</td><td>7</td><td>8</td><td>-1</td><td>3</td></tr>
-    <tr><td>27</td><td>Athletic Club</td><td>4</td><td>1</td><td>0</td><td>3</td><td>4</td><td>9</td><td>-5</td><td>3</td></tr>
-    <tr><td>28</td><td>Union St.-Gilloise</td><td>4</td><td>1</td><td>0</td><td>3</td><td>4</td><td>12</td><td>-8</td><td>3</td></tr>
-    <tr><td>29</td><td>Bodo/Glimt</td><td>4</td><td>0</td><td>2</td><td>2</td><td>5</td><td>8</td><td>-3</td><td>2</td></tr>
-    <tr><td>30</td><td>Slavia Prague</td><td>4</td><td>0</td><td>2</td><td>2</td><td>2</td><td>8</td><td>-6</td><td>2</td></tr>
-    <tr><td>31</td><td>Olympiacos</td><td>4</td><td>0</td><td>2</td><td>2</td><td>2</td><td>9</td><td>-7</td><td>2</td></tr>
-    <tr><td>32</td><td>Villarreal</td><td>4</td><td>0</td><td>1</td><td>3</td><td>2</td><td>6</td><td>-4</td><td>1</td></tr>
-    <tr><td>33</td><td>F.C. København</td><td>4</td><td>0</td><td>1</td><td>3</td><td>4</td><td>12</td><td>-8</td><td>1</td></tr>
-    <tr><td>34</td><td>Kairat Almaty</td><td>4</td><td>0</td><td>1</td><td>3</td><td>2</td><td>11</td><td>-9</td><td>1</td></tr>
-    <tr><td>35</td><td>Benfica</td><td>4</td><td>0</td><td>0</td><td>4</td><td>2</td><td>8</td><td>-6</td><td>0</td></tr>
-    <tr><td>36</td><td>Ajax Amsterdam</td><td>4</td><td>0</td><td>0</td><td>4</td><td>1</td><td>14</td><td>-13</td><td>0</td></tr>
-
-  </tbody>
-</table>
-
-  </div>
-
-</section>
+<main>
+  <!-- Overall Leaderboard -->
+  <section class="overall-table">
+    <div class="table-header">
+      <h2>Overall Leaderboard</h2>
+      <div class="controls">
+        <button onclick="sortTable('points')" class="sort-btn">Sort by Points</button>
+        <button onclick="sortTable('gd')" class="sort-btn">Sort by GD</button>
+        <button onclick="sortTable('wins')" class="sort-btn">Sort by Wins</button>
+        <button onclick="resetSort()" class="sort-btn">Reset Sort</button>
+      </div>
+    </div>
+    
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-color qualified"></span> Champions League Qualifiers
+      </div>
+      <div class="legend-item">
+        <span class="legend-color europa"></span> Europa League Qualifiers
+      </div>
+      <div class="legend-item">
+        <span class="legend-color eliminated"></span> Eliminated
+      </div>
+    </div>
+    
+    <div class="table-container">
+      <table id="ucl-table">
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Club</th>
+            <th>GP</th>
+            <th>W</th>
+            <th>D</th>
+            <th>L</th>
+            <th>F</th>
+            <th>A</th>
+            <th>GD</th>
+            <th>P</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="qualified"><td>1</td><td><span class="team-logo">⚽</span> Bayern Munich</td><td>4</td><td>4</td><td>0</td><td>0</td><td>14</td><td>3</td><td class="positive">+11</td><td class="points">12</td></tr>
+          <tr class="qualified"><td>2</td><td><span class="team-logo">⚽</span> Arsenal</td><td>4</td><td>4</td><td>0</td><td>0</td><td>11</td><td>0</td><td class="positive">+11</td><td class="points">12</td></tr>
+          <tr class="qualified"><td>3</td><td><span class="team-logo">⚽</span> Internazionale</td><td>4</td><td>4</td><td>0</td><td>0</td><td>11</td><td>1</td><td class="positive">+10</td><td class="points">12</td></tr>
+          <tr class="qualified"><td>4</td><td><span class="team-logo">⚽</span> Manchester City</td><td>4</td><td>3</td><td>1</td><td>0</td><td>10</td><td>3</td><td class="positive">+7</td><td class="points">10</td></tr>
+          <tr class="qualified"><td>5</td><td><span class="team-logo">⚽</span> Paris Saint-Germain</td><td>4</td><td>3</td><td>0</td><td>1</td><td>14</td><td>5</td><td class="positive">+9</td><td class="points">9</td></tr>
+          <tr class="qualified"><td>6</td><td><span class="team-logo">⚽</span> Newcastle United</td><td>4</td><td>3</td><td>0</td><td>1</td><td>10</td><td>2</td><td class="positive">+8</td><td class="points">9</td></tr>
+          <tr class="qualified"><td>7</td><td><span class="team-logo">⚽</span> Real Madrid</td><td>4</td><td>3</td><td>0</td><td>1</td><td>8</td><td>2</td><td class="positive">+6</td><td class="points">9</td></tr>
+          <tr class="qualified"><td>8</td><td><span class="team-logo">⚽</span> Liverpool</td><td>4</td><td>3</td><td>0</td><td>1</td><td>9</td><td>4</td><td class="positive">+5</td><td class="points">9</td></tr>
+          <tr class="qualified"><td>9</td><td><span class="team-logo">⚽</span> Galatasaray</td><td>4</td><td>3</td><td>0</td><td>1</td><td>8</td><td>6</td><td class="positive">+2</td><td class="points">9</td></tr>
+          <tr class="europa"><td>10</td><td><span class="team-logo">⚽</span> Tottenham Hotspur</td><td>4</td><td>2</td><td>2</td><td>0</td><td>7</td><td>2</td><td class="positive">+5</td><td class="points">8</td></tr>
+          <tr class="europa"><td>11</td><td><span class="team-logo">⚽</span> Barcelona</td><td>4</td><td>2</td><td>1</td><td>1</td><td>12</td><td>7</td><td class="positive">+5</td><td class="points">7</td></tr>
+          <tr class="europa"><td>12</td><td><span class="team-logo">⚽</span> Chelsea</td><td>4</td><td>2</td><td>1</td><td>1</td><td>9</td><td>6</td><td class="positive">+3</td><td class="points">7</td></tr>
+          <tr class="europa"><td>13</td><td><span class="team-logo">⚽</span> Sporting CP</td><td>4</td><td>2</td><td>1</td><td>1</td><td>8</td><td>5</td><td class="positive">+3</td><td class="points">7</td></tr>
+          <tr class="europa"><td>14</td><td><span class="team-logo">⚽</span> Borussia Dortmund</td><td>4</td><td>2</td><td>1</td><td>1</td><td>13</td><td>11</td><td class="positive">+2</td><td class="points">7</td></tr>
+          <tr class="europa"><td>15</td><td><span class="team-logo">⚽</span> FK Qarabag</td><td>4</td><td>2</td><td>1</td><td>1</td><td>8</td><td>7</td><td class="positive">+1</td><td class="points">7</td></tr>
+          <tr class="europa"><td>16</td><td><span class="team-logo">⚽</span> Atalanta</td><td>4</td><td>2</td><td>1</td><td>1</td><td>3</td><td>5</td><td class="negative">-2</td><td class="points">7</td></tr>
+          <tr><td>17</td><td><span class="team-logo">⚽</span> Atlético Madrid</td><td>4</td><td>2</td><td>0</td><td>2</td><td>10</td><td>9</td><td class="positive">+1</td><td class="points">6</td></tr>
+          <tr><td>18</td><td><span class="team-logo">⚽</span> PSV Eindhoven</td><td>4</td><td>1</td><td>2</td><td>1</td><td>9</td><td>7</td><td class="positive">+2</td><td class="points">5</td></tr>
+          <tr><td>19</td><td><span class="team-logo">⚽</span> AS Monaco</td><td>4</td><td>1</td><td>2</td><td>1</td><td>4</td><td>6</td><td class="negative">-2</td><td class="points">5</td></tr>
+          <tr><td>20</td><td><span class="team-logo">⚽</span> Pafos</td><td>4</td><td>1</td><td>2</td><td>1</td><td>2</td><td>5</td><td class="negative">-3</td><td class="points">5</td></tr>
+          <tr><td>21</td><td><span class="team-logo">⚽</span> Bayer Leverkusen</td><td>4</td><td>1</td><td>2</td><td>1</td><td>6</td><td>10</td><td class="negative">-4</td><td class="points">5</td></tr>
+          <tr><td>22</td><td><span class="team-logo">⚽</span> Club Brugge</td><td>4</td><td>1</td><td>1</td><td>2</td><td>8</td><td>10</td><td class="negative">-2</td><td class="points">4</td></tr>
+          <tr><td>23</td><td><span class="team-logo">⚽</span> Eintracht Frankfurt</td><td>4</td><td>1</td><td>1</td><td>2</td><td>7</td><td>11</td><td class="negative">-4</td><td class="points">4</td></tr>
+          <tr><td>24</td><td><span class="team-logo">⚽</span> Napoli</td><td>4</td><td>1</td><td>1</td><td>2</td><td>4</td><td>9</td><td class="negative">-5</td><td class="points">4</td></tr>
+          <tr class="eliminated"><td>25</td><td><span class="team-logo">⚽</span> Marseille</td><td>4</td><td>1</td><td>0</td><td>3</td><td>6</td><td>5</td><td class="positive">+1</td><td class="points">3</td></tr>
+          <tr class="eliminated"><td>26</td><td><span class="team-logo">⚽</span> Juventus</td><td>4</td><td>0</td><td>3</td><td>1</td><td>7</td><td>8</td><td class="negative">-1</td><td class="points">3</td></tr>
+          <tr class="eliminated"><td>27</td><td><span class="team-logo">⚽</span> Athletic Club</td><td>4</td><td>1</td><td>0</td><td>3</td><td>4</td><td>9</td><td class="negative">-5</td><td class="points">3</td></tr>
+          <tr class="eliminated"><td>28</td><td><span class="team-logo">⚽</span> Union St.-Gilloise</td><td>4</td><td>1</td><td>0</td><td>3</td><td>4</td><td>12</td><td class="negative">-8</td><td class="points">3</td></tr>
+          <tr class="eliminated"><td>29</td><td><span class="team-logo">⚽</span> Bodo/Glimt</td><td>4</td><td>0</td><td>2</td><td>2</td><td>5</td><td>8</td><td class="negative">-3</td><td class="points">2</td></tr>
+          <tr class="eliminated"><td>30</td><td><span class="team-logo">⚽</span> Slavia Prague</td><td>4</td><td>0</td><td>2</td><td>2</td><td>2</td><td>8</td><td class="negative">-6</td><td class="points">2</td></tr>
+          <tr class="eliminated"><td>31</td><td><span class="team-logo">⚽</span> Olympiacos</td><td>4</td><td>0</td><td>2</td><td>2</td><td>2</td><td>9</td><td class="negative">-7</td><td class="points">2</td></tr>
+          <tr class="eliminated"><td>32</td><td><span class="team-logo">⚽</span> Villarreal</td><td>4</td><td>0</td><td>1</td><td>3</td><td>2</td><td>6</td><td class="negative">-4</td><td class="points">1</td></tr>
+          <tr class="eliminated"><td>33</td><td><span class="team-logo">⚽</span> F.C. København</td><td>4</td><td>0</td><td>1</td><td>3</td><td>4</td><td>12</td><td class="negative">-8</td><td class="points">1</td></tr>
+          <tr class="eliminated"><td>34</td><td><span class="team-logo">⚽</span> Kairat Almaty</td><td>4</td><td>0</td><td>1</td><td>3</td><td>2</td><td>11</td><td class="negative">-9</td><td class="points">1</td></tr>
+          <tr class="eliminated"><td>35</td><td><span class="team-logo">⚽</span> Benfica</td><td>4</td><td>0</td><td>0</td><td>4</td><td>2</td><td>8</td><td class="negative">-6</td><td class="points">0</td></tr>
+          <tr class="eliminated"><td>36</td><td><span class="team-logo">⚽</span> Ajax Amsterdam</td><td>4</td><td>0</td><td>0</td><td>4</td><td>1</td><td>14</td><td class="negative">-13</td><td class="points">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
 
 <footer>
   <div class="footer-content">
@@ -88,9 +111,10 @@
     </ul>
   </div>
   <div class="footer-bottom">
-    <p>&copy; 2024 haxhim. All Rights Reserved | Designed by You</p>
+    <p>&copy; 2024 haxhim. All Rights Reserved | Designed by haxhim</p>
   </div>
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
